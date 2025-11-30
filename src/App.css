@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@plugin "daisyui";
+/* للكروم و Edge و Safari */
+/* في global.css أو index.css */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+input::placeholder {
+  color: rgba(0, 95, 161, 0.5); /* اللون اللي انت عايزه */
+  opacity: 1; /* علشان ميكونش باهت */
+  background: transparent !important; /* شيل أي خلفية */
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #005FA1 !important;
+}
