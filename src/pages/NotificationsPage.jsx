@@ -20,7 +20,7 @@ function NotificationsPage() {
     setLoading(true);
     
     try {
-      const response = await fetch("https://apilab.runasp.net/WeatherForecast/fcm", {
+      const response = await fetch("https://apilab-dev.runasp.net/WeatherForecast/fcm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

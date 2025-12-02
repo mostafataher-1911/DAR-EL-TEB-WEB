@@ -43,11 +43,11 @@ function Alllabtest() {
     try {
       setLoading(true);
 
-      const catRes = await fetch("https://apilab.runasp.net/api/Category/GetAll");
+      const catRes = await fetch("https://apilab-dev.runasp.net/api/Category/GetAll");
       const catData = await catRes.json();
       if (catData.success) setTypes(catData.resource);
 
-      const labRes = await fetch("https://apilab.runasp.net/api/MedicalLabs/GetAll");
+      const labRes = await fetch("https://apilab-dev.runasp.net/api/MedicalLabs/GetAll");
       const labData = await labRes.json();
       if (labData.success) setTests(labData.resource);
     } catch (err) {
@@ -128,8 +128,8 @@ function Alllabtest() {
 
     try {
       const url = editTest
-        ? "https://apilab.runasp.net/api/MedicalLabs/Update"
-        : "https://apilab.runasp.net/api/MedicalLabs/Add";
+        ? "https://apilab-dev.runasp.net/api/MedicalLabs/Update"
+        : "https://apilab-dev.runasp.net/api/MedicalLabs/Add";
 
       const method = editTest ? "PUT" : "POST";
 
@@ -415,7 +415,7 @@ function Alllabtest() {
                 {(form.image || (editTest && editTest.imageUrl)) && (
                   <div className="relative w-32 h-32 mx-auto">
                     <img
-                      src={form.image ? `data:image/*;base64,${form.image}` : `https://apilab.runasp.net${editTest.imageUrl}`}
+                      src={form.image ? `data:image/*;base64,${form.image}` : `https://apilab-dev.runasp.net${editTest.imageUrl}`}
                       alt="preview"
                       className="w-full h-full object-cover rounded-lg"
                     />

@@ -20,34 +20,46 @@ function Addads() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-const API_BASE =
-  import.meta.env.MODE === "development"
-    ? "/api/Responser"
-    : "https://apilab.runasp.net/api/Responser";
-
+  const API_BASE = "https://apilab-dev.runasp.net/api/Responser";
 
   const convertToBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
+    if (!file) return;
 
-      // 🟢 التحويل بعد لحظة صغيرة لتفادي تهنيج الـ UI
-      setTimeout(async () => {
-        const base64 = await convertToBase64(file);
-        setImageBase64(base64);
-      }, 100);
+    // تحقق من نوع وحجم الملف
+    if (!file.type.startsWith('image/')) {
+      toast.error("الملف يجب أن يكون صورة");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB
+      toast.error("حجم الصورة يجب أن يكون أقل من 5MB");
+      return;
+    }
+
+    try {
+      setImage(URL.createObjectURL(file));
+      const base64 = await convertToBase64(file);
+      setImageBase64(base64);
+      toast.success("تم تحميل الصورة بنجاح ✅");
+    } catch (error) {
+      toast.error("فشل في تحميل الصورة");
+      console.error("Image conversion error:", error);
     }
   };
 
   const handleRemoveImage = () => {
+    if (image) {
+      URL.revokeObjectURL(image);
+    }
     setImage(null);
     setImageBase64("");
   };
@@ -55,15 +67,35 @@ const API_BASE =
   const fetchAds = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/GetAll`);
-      const data = await res.json();
-      if (data.success) {
-        setAds(data.resource || []);
-      } else {
-        toast.error("فشل في جلب الإعلانات");
+      const res = await fetch(`${API_BASE}/GetAll`, {
+        method: "GET",
+        headers: {
+          "accept": "*/*"
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
       }
-    } catch {
+
+      const data = await res.json();
+      console.log("Ads API Response:", data); // للتdebug
+
+      // معالجة مختلف أشكال الرد
+      if (Array.isArray(data)) {
+        setAds(data);
+      } else if (data && data.success && Array.isArray(data.resource)) {
+        setAds(data.resource);
+      } else if (data && Array.isArray(data.resource)) {
+        setAds(data.resource);
+      } else {
+        setAds([]);
+        toast.error("لا توجد إعلانات أو شكل البيانات غير متوقع");
+      }
+    } catch (error) {
+      console.error("Fetch ads error:", error);
       toast.error("خطأ في الاتصال بالسيرفر");
+      setAds([]);
     } finally {
       setLoading(false);
     }
@@ -81,54 +113,114 @@ const API_BASE =
 
     setUploading(true);
     try {
+      // تنظيف الـ base64 إذا كان يحتوي على prefix
+      let cleanBase64 = imageBase64;
+      if (imageBase64.includes(',')) {
+        cleanBase64 = imageBase64.split(',')[1];
+      }
+
+      const payload = {
+        imageBase64: cleanBase64
+      };
+
+      console.log("Sending payload:", { 
+        imageBase64Length: cleanBase64.length,
+        first50Chars: cleanBase64.substring(0, 50)
+      });
+
       const res = await fetch(`${API_BASE}/Add`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageBase64 }),
+        headers: { 
+          "accept": "*/*",
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(payload),
       });
-      const data = await res.json();
 
-     if (data.success) {
-  toast.success("تم رفع الإعلان بنجاح");
-  handleRemoveImage();
-  setShowModal(false);
-  fetchAds(); // ✅ جلب الإعلانات من السيرفر بعد الإضافة
+      console.log("Add response status:", res.status);
 
-
-        // ✅ تحديث محلي بدون إعادة تحميل الكل
-       const newAd = { id: data.resource?.id, imageUrl: data.resource?.imageUrl || "" };
-setAds((prev) => [newAd, ...prev]);
-
-      } else {
-        toast.error("حدث خطأ أثناء رفع الإعلان");
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Add error response:", errorText);
+        throw new Error(`فشل في الإضافة: ${res.status}`);
       }
-    } catch {
-      toast.error("فشل الاتصال بالسيرفر");
+
+      const data = await res.json();
+      console.log("Add success response:", data);
+
+      if (data.success) {
+        toast.success("تم رفع الإعلان بنجاح ✅");
+        handleRemoveImage();
+        setShowModal(false);
+        fetchAds(); // إعادة تحميل البيانات من السيرفر
+      } else {
+        toast.error(data.message || "حدث خطأ أثناء رفع الإعلان");
+      }
+    } catch (error) {
+      console.error("Add ad error:", error);
+      toast.error(error.message || "فشل الاتصال بالسيرفر");
     } finally {
       setUploading(false);
     }
   };
 
- const handleDeleteAd = async (id) => {
-  if (!window.confirm("هل تريد حذف هذا الإعلان؟")) return;
+  const handleDeleteAd = async (id) => {
+    if (!window.confirm("هل تريد حذف هذا الإعلان؟")) return;
 
-  try {
-    const res = await fetch(`${API_BASE}/Delete?id=${id}`, {
-      method: "DELETE",
-    });
-    const data = await res.json();
+    try {
+      const res = await fetch(`${API_BASE}/Delete?id=${id}`, {
+        method: "DELETE",
+        headers: {
+          "accept": "*/*"
+        }
+      });
 
-    if (data.success) {
-      toast.success("تم حذف الإعلان بنجاح ✅");
-      setAds((prev) => prev.filter((ad) => ad.id !== id)); // حذف محلي
-    } else {
-      toast.error(data.message || "فشل في حذف الإعلان ❌");
+      console.log("Delete response status:", res.status);
+
+      if (!res.ok) {
+        throw new Error(`فشل في الحذف: ${res.status}`);
+      }
+
+      const data = await res.json();
+      
+      if (data.success) {
+        toast.success("تم حذف الإعلان بنجاح ✅");
+        setAds((prev) => prev.filter((ad) => ad.id !== id));
+      } else {
+        toast.error(data.message || "فشل في حذف الإعلان ❌");
+      }
+    } catch (error) {
+      console.error("Delete ad error:", error);
+      toast.error(error.message || "تعذر الاتصال بالسيرفر");
     }
-  } catch {
-    toast.error("تعذر الاتصال بالسيرفر");
-  }
-};
+  };
 
+  // دالة لعرض الصور مع fallback
+  const ImageWithFallback = ({ src, alt, className }) => {
+    const [imgSrc, setImgSrc] = useState(src);
+    const [hasError, setHasError] = useState(false);
+
+    const handleError = () => {
+      setHasError(true);
+    };
+
+    if (hasError || !src) {
+      return (
+        <div className={`${className} bg-gray-200 flex items-center justify-center rounded-md`}>
+          <PhotoIcon className="w-8 h-8 text-gray-400" />
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        onError={handleError}
+      />
+    );
+  };
 
   // ✅ Pagination logic
   const totalPages = Math.ceil(ads.length / itemsPerPage);
@@ -147,7 +239,8 @@ setAds((prev) => [newAd, ...prev]);
           <div className="flex gap-3">
             <button
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-2 bg-[#005FA1] text-white px-4 py-2 rounded-lg hover:bg-[#004577] transition"
+              className="flex items-center gap-2 bg-[#005FA1] text-white px-4 py-2 rounded-lg hover:bg-[#004577] transition disabled:opacity-50"
+              disabled={uploading}
             >
               <PlusCircleIcon className="w-5 h-5" />
               إضافة إعلان جديد
@@ -172,15 +265,15 @@ setAds((prev) => [newAd, ...prev]);
                   {currentAds.length > 0 ? (
                     currentAds.map((ad, index) => (
                       <tr
-                        key={index}
+                        key={ad.id || index}
                         className="border-t hover:bg-gray-50 transition"
                       >
                         <td className="px-4 py-3">
                           {(currentPage - 1) * itemsPerPage + index + 1}
                         </td>
                         <td className="px-4 py-3">
-                          <img
-                            src={`https://apilab.runasp.net${ad.imageUrl}`}
+                          <ImageWithFallback
+                            src={ad.imageUrl ? `https://apilab-dev.runasp.net${ad.imageUrl}` : ""}
                             alt="ad"
                             className="w-32 h-24 object-cover rounded-md mx-auto"
                           />
@@ -188,7 +281,8 @@ setAds((prev) => [newAd, ...prev]);
                         <td className="px-4 py-3">
                           <button
                             onClick={() => handleDeleteAd(ad.id)}
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition flex items-center gap-1 mx-auto"
+                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition flex items-center gap-1 mx-auto disabled:opacity-50"
+                            disabled={uploading}
                           >
                             <TrashIcon className="w-5 h-5" />
                             حذف
@@ -210,20 +304,20 @@ setAds((prev) => [newAd, ...prev]);
               </table>
             </div>
 
-            {ads.length > 0 && (
+            {ads.length > 0 && totalPages > 1 && (
               <>
                 <div className="flex justify-center mt-6">
                   <div className="join">
                     <button
-                      className="join-item btn bg-[#005FA1] text-white"
-                      disabled={currentPage === 1}
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-gray-400"
+                      disabled={currentPage === 1 || uploading}
                       onClick={() => setCurrentPage((p) => p - 1)}
                     >
                       الصفحة السابقة
                     </button>
                     <button
-                      className="join-item btn bg-[#005FA1] text-white"
-                      disabled={currentPage === totalPages}
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-gray-400"
+                      disabled={currentPage === totalPages || uploading}
                       onClick={() => setCurrentPage((p) => p + 1)}
                     >
                       الصفحة التالية
@@ -241,32 +335,36 @@ setAds((prev) => [newAd, ...prev]);
       </div>
 
       {showModal && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[400px] relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md relative">
             <h1 className="text-2xl font-bold text-[#005FA1] mb-4 text-right">
               إضافة إعلان جديد
             </h1>
 
             <div className="flex flex-col items-center mb-4">
               {!image ? (
-                <label className="flex items-center justify-center w-24 h-24 bg-[#005FA1] text-white rounded-full shadow cursor-pointer hover:bg-[#004577] transition">
-                  <PhotoIcon className="w-10 h-10" />
+                <label className="flex flex-col items-center justify-center w-32 h-32 bg-gray-100 border-2 border-dashed border-[#005FA1] rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                  <PhotoIcon className="w-12 h-12 text-[#005FA1] mb-2" />
+                  <span className="text-[#005FA1] text-sm">اختر صورة</span>
                   <input
                     type="file"
                     className="hidden"
+                    accept="image/*"
                     onChange={handleFileChange}
+                    disabled={uploading}
                   />
                 </label>
               ) : (
-                <div className="relative w-32 h-32">
+                <div className="relative">
                   <img
                     src={image}
                     alt="preview"
-                    className="w-full h-full object-cover rounded-xl shadow-md"
+                    className="w-48 h-48 object-cover rounded-lg shadow-md"
                   />
                   <button
                     onClick={handleRemoveImage}
-                    className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600"
+                    className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition"
+                    disabled={uploading}
                   >
                     <XMarkIcon className="w-5 h-5" />
                   </button>
@@ -276,16 +374,19 @@ setAds((prev) => [newAd, ...prev]);
 
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-3 py-2 bg-gray-300 rounded-lg"
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition disabled:opacity-50"
                 onClick={() => setShowModal(false)}
+                disabled={uploading}
               >
                 إلغاء
               </button>
-              <CustomButton
-                text={uploading ? "جارٍ الرفع..." : "إضافة"}
+              <button
                 onClick={handleAddAd}
-                disabled={uploading}
-              />
+                disabled={!imageBase64 || uploading}
+                className="px-4 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#004577] transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {uploading ? "جارٍ الرفع..." : "إضافة الإعلان"}
+              </button>
             </div>
           </div>
         </div>

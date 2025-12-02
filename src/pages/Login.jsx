@@ -49,8 +49,8 @@ function Login() {
     try {
       const url =
         role === "doctor"
-          ? "https://apilab.runasp.net/api/User/login/Admin"
-          : "https://apilab.runasp.net/api/User/login/Assistant";
+          ? "https://apilab-dev.runasp.net/api/User/login/Admin"
+          : "https://apilab-dev.runasp.net/api/User/login/Assistant";
 
       const body =
         role === "doctor"

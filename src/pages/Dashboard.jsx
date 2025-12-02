@@ -40,8 +40,8 @@ function Dashboard() {
   const [coinsForm, setCoinsForm] = useState({ phone: "", selectedLabs: [] });
 
   const itemsPerPage = 7;
-  const CLIENT_API = "https://apilab.runasp.net/api/Client";
-  const UNION_API = "https://apilab.runasp.net/api/Union";
+  const CLIENT_API = "https://apilab-dev.runasp.net/api/Client";
+  const UNION_API = "https://apilab-dev.runasp.net/api/Union";
 
   // تحميل النقابات
   const fetchUnions = async () => {
@@ -90,7 +90,7 @@ function Dashboard() {
 
   // تحميل التحاليل (لل coins)
   useEffect(() => {
-    fetch("https://apilab.runasp.net/api/MedicalLabs/GetAll")
+    fetch("https://apilab-dev.runasp.net/api/MedicalLabs/GetAll")
       .then((res) => res.json())
       .then((data) => {
         if (data.resource) {
@@ -279,7 +279,7 @@ function Dashboard() {
     console.log("📤 إرسال بيانات التحديث:", payload);
 
     try {
-      const res = await fetch(`https://apilab.runasp.net/api/Client/UpdateCoins`, {
+      const res = await fetch(`https://apilab-dev.runasp.net/api/Client/UpdateCoins`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

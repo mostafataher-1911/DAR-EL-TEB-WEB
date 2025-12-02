@@ -51,11 +51,11 @@ function DashboardLabTests() {
     try {
       setLoading(true);
 
-      const catRes = await fetch("https://apilab.runasp.net/api/Category/GetAll");
+      const catRes = await fetch("https://apilab-dev.runasp.net/api/Category/GetAll");
       const catData = await catRes.json();
       if (catData.success) setTypes(catData.resource);
 
-      const labRes = await fetch("https://apilab.runasp.net/api/MedicalLabs/GetAll");
+      const labRes = await fetch("https://apilab-dev.runasp.net/api/MedicalLabs/GetAll");
       const labData = await labRes.json();
       if (labData.success) setTests(labData.resource);
     } catch (err) {
@@ -149,8 +149,8 @@ function DashboardLabTests() {
 
     try {
       const url = editTest
-        ? "https://apilab.runasp.net/api/MedicalLabs/Update"
-        : "https://apilab.runasp.net/api/MedicalLabs/Add";
+        ? "https://apilab-dev.runasp.net/api/MedicalLabs/Update"
+        : "https://apilab-dev.runasp.net/api/MedicalLabs/Add";
 
       const method = editTest ? "PUT" : "POST";
 
@@ -181,7 +181,7 @@ function DashboardLabTests() {
 
     try {
       const res = await fetch(
-        `https://apilab.runasp.net/api/MedicalLabs/Delete?id=${id}`,
+        `https://apilab-dev.runasp.net/api/MedicalLabs/Delete?id=${id}`,
         { method: "DELETE" }
       );
       const data = await res.json();
@@ -206,7 +206,7 @@ function DashboardLabTests() {
     }
 
     try {
-      const res = await fetch("https://apilab.runasp.net/api/Category/Add", {
+      const res = await fetch("https://apilab-dev.runasp.net/api/Category/Add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -239,7 +239,7 @@ function DashboardLabTests() {
     }
 
     try {
-      const res = await fetch("https://apilab.runasp.net/api/Category/Update", {
+      const res = await fetch("https://apilab-dev.runasp.net/api/Category/Update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -269,7 +269,7 @@ function DashboardLabTests() {
 
     try {
       const res = await fetch(
-        `https://apilab.runasp.net/api/Category/Delete?id=${type.id}`,
+        `https://apilab-dev.runasp.net/api/Category/Delete?id=${type.id}`,
         { method: "DELETE" }
       );
       const data = await res.json();
@@ -380,7 +380,7 @@ function DashboardLabTests() {
                         <td className="p-3">
                           {item.imageUrl ? (
                             <img
-                              src={`https://apilab.runasp.net${item.imageUrl}`}
+                              src={`https://apilab-dev.runasp.net${item.imageUrl}`}
                               alt={item.name}
                               className="w-12 h-12 object-cover rounded-full mx-auto"
                             />
@@ -580,7 +580,7 @@ function DashboardLabTests() {
                 {(form.image || (editTest && editTest.imageUrl)) && (
                   <div className="relative w-32 h-32 mx-auto">
                     <img
-                      src={form.image ? `data:image/*;base64,${form.image}` : `https://apilab.runasp.net${editTest.imageUrl}`}
+                      src={form.image ? `data:image/*;base64,${form.image}` : `https://apilab-dev.runasp.net${editTest.imageUrl}`}
                       alt="preview"
                       className="w-full h-full object-cover rounded-lg"
                     />
