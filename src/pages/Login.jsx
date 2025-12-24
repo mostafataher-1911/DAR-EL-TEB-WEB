@@ -199,9 +199,9 @@ function Login() {
                 className="focus:outline-none"
               >
                 {showPassword ? (
-                  <EyeSlashIcon className="w-[24px] h-[24px] text-[#005FA1]" />
+                  <EyeSlashIcon className="w-[24px] h-[24px] text-input" />
                 ) : (
-                  <EyeIcon className="w-[24px] h-[24px] text-[#005FA1]" />
+                  <EyeIcon className="w-[24px] h-[24px] text-input" />
                 )}
               </button>
             }

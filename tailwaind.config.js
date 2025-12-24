@@ -22,6 +22,7 @@ export default {
           secondary: "#f6d860",
           accent: "#37cdbe",
           neutral: "#3d4451",
+          input: "#005FA1",
           "base-100": "#ffffff",
         },
         dark: {
@@ -30,7 +31,8 @@ export default {
           secondary: "#f6d860",
           accent: "#37cdbe",
           neutral: "#2a2e37",
-          "base-100": "#ffffff",
+          input: "black",
+          "base-100": "#000000",
         }
       }
     ],

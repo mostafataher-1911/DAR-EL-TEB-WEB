@@ -493,7 +493,7 @@ function Dashboardunion() {
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-4 mt-6">
                 <button
-                  className="px-4 py-2 bg-primary text-base-100 rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-primary-focus transition-colors duration-200"
+                  className="px-4 py-2 bg-[#005FA1] text-white rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-[#00457a] focus:outline-none focus:ring-2 focus:ring-[#00457a] transition-colors duration-200"
                   disabled={currentPage === 1 || processing}
                   onClick={() => setCurrentPage(p => p - 1)}
                 >
@@ -503,7 +503,7 @@ function Dashboardunion() {
                   صفحة {currentPage} من {totalPages}
                 </span>
                 <button
-                  className="px-4 py-2 bg-primary text-base-100 rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-primary-focus transition-colors duration-200"
+                  className="px-4 py-2 bg-[#005FA1] text-white rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-[#00457a] focus:outline-none focus:ring-2 focus:ring-[#00457a] transition-colors duration-200"
                   disabled={currentPage === totalPages || processing}
                   onClick={() => setCurrentPage(p => p + 1)}
                 >
@@ -521,7 +521,7 @@ function Dashboardunion() {
           <div className="bg-base-200 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col transition-colors duration-300">
             {/* Modal Header - ثابت */}
             <div className="flex justify-between items-center p-6 border-b border-base-300 sticky top-0 bg-base-200 z-10">
-              <h2 className="text-2xl font-bold text-primary">
+              <h2 className="text-2xl font-bold text-[#005FA1]">
                 {editUnion ? "تعديل النقابة" : "إضافة نقابة جديدة"}
               </h2>
               <button
@@ -542,13 +542,13 @@ function Dashboardunion() {
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    <BuildingLibraryIcon className="w-5 h-5 text-primary" />
+                    <BuildingLibraryIcon className="w-5 h-5 text-[#005FA1]" />
                   </div>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full pr-3 pl-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-right transition-colors duration-200"
+                    className="w-full pr-3 pl-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-[#005FA1] focus:border-transparent outline-none text-right transition-colors duration-200"
                     placeholder="أدخل اسم النقابة"
                     disabled={processing}
                   />
@@ -568,7 +568,7 @@ function Dashboardunion() {
                     step="0.1"
                     value={form.discount}
                     onChange={(e) => setForm({ ...form, discount: e.target.value })}
-                    className="w-full pr-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-right transition-colors duration-200"
+                    className="w-full pr-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-[#005FA1] focus:border-transparent outline-none text-right transition-colors duration-200"
                     placeholder="0"
                     disabled={processing}
                   />
@@ -592,7 +592,7 @@ function Dashboardunion() {
                       <img
                         src={form.image}
                         alt="معاينة الصورة"
-                        className="w-full h-full object-cover rounded-lg border-2 border-primary"
+                        className="w-full h-full object-cover rounded-lg border-2 border-[#005FA1] transition-colors duration-200"
                       />
                       <button
                         type="button"
@@ -609,7 +609,7 @@ function Dashboardunion() {
                           {form.imageName}
                         </p>
                         {form.imageBase64 && (
-                          <p className="text-xs text-primary mt-1">
+                          <p className="text-xs text-[#005FA1] mt-1">
                             ✓ جاهزة للرفع
                           </p>
                         )}
@@ -620,7 +620,7 @@ function Dashboardunion() {
 
                 {/* زر رفع الصورة */}
                 <div className="flex justify-center">
-                  <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-300'} ${form.image ? 'border-base-300' : 'border-primary'} transition-colors duration-200`}>
+                  <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-300'} ${form.image ? 'border-base-300' : 'border-[#005FA1]'} transition-colors duration-200`}>
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                       <PhotoIcon className="w-8 h-8 mb-2 text-base-content opacity-50" />
                       <p className="text-sm text-base-content font-medium mb-1">
@@ -642,8 +642,8 @@ function Dashboardunion() {
                 
                 {/* نص تحذيري */}
                 {form.imageBase64 && (
-                  <div className="mt-3 p-2 bg-primary/10 rounded-lg">
-                    <p className="text-xs text-primary text-center">
+                  <div className="mt-3 p-2 bg-[#005FA1]/10 rounded-lg">
+                    <p className="text-xs text-[#005FA1] text-center">
                       ⚠️ الصور الكبيرة جداً قد تأخذ وقتاً طويلاً للرفع
                     </p>
                   </div>
@@ -681,7 +681,7 @@ function Dashboardunion() {
                   <button
                     onClick={addUnion}
                     disabled={processing || !form.name.trim() || !form.imageBase64}
-                    className="px-6 py-2 bg-primary text-base-100 rounded-lg hover:bg-primary-focus transition-colors duration-200 disabled:opacity-50 flex items-center gap-2"
+                    className="px-6 py-2 bg-[#005FA1] text-base-100 rounded-lg hover:bg-[#00457a] transition-colors duration-200 disabled:opacity-50 flex items-center gap-2"
                   >
                     {processing ? (
                       <>
