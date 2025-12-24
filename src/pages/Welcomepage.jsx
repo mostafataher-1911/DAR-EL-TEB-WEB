@@ -37,7 +37,7 @@ function Welcomepage() {
             />
           </div>
 
-          <h3 className="font-roboto font-bold text-[20px] text-center text-[#001D3C] dark:text-base-content mb-5 mt-28 transition-colors duration-300">
+          <h3 className="font-roboto font-bold text-[20px] text-center text-[#005FA1] dark:text-base-content mb-5 mt-28 transition-colors duration-300">
             اهلا بك في معمل دار الطب
           </h3>
 

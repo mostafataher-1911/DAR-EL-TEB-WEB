@@ -126,7 +126,7 @@ function Login() {
 
         {/* العنوان */}
         <h3 className="font-roboto font-bold text-[20px] text-center 
-                       text-[#001D3C] dark:text-base-content mb-3 mt-20 
+                       text-[#005FA1] dark:text-base-content mb-3 mt-20 
                        transition-colors duration-300">
           {role === "doctor"
             ? "تسجيل دخول الطبيب"
