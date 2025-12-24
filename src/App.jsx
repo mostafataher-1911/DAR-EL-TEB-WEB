@@ -2,15 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, useEffect } from "react"; // أضف useEffect هنا
 import { Toaster } from 'react-hot-toast';
 import Login from "./pages/Login";
-import Layout from "./layout/Layout";
-import AddAccount from "./component/AddAcount";
-import DeleteAccount from "./component/DeleteAcount";
-import AddCoins from "./component/AddCoins";
-import AddUnion from "./component/AddUnion";
-import DeleteUnion from "./component/DeleteUnion";
-import AddOffer from "./component/AddOffer";
-import DeleteOffer from "./component/DeleteOffer";
-import ProtectedRoute from "./routes/ProtectedRoute";
 import Loading from "./component/Loading";
 import './App.css'
 import Welcomepage from "./pages/Welcomepage";
@@ -24,6 +15,7 @@ import Addads from "./pages/Addads";
 import { disableDarkMode } from './utils/disableDarkMode'
 import NotificationsPage from "./pages/NotificationsPage";
 import Alllabtest from "./pages/Alllabtest";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {
   useEffect(() => {
@@ -32,6 +24,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <ThemeProvider>
       <Suspense fallback={<Loading/>}>
         <Toaster position="top-center" reverseOrder={false} />
 
@@ -55,6 +48,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

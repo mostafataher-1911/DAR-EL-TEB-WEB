@@ -11,7 +11,7 @@ import {
   BellIcon,
 } from "@heroicons/react/24/outline";
 import logoimg from "../assets/images/logo (15).png";
-
+import ThemeToggle from '../component/ThemeToggle';
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,8 +44,13 @@ function Navbar() {
 
   return (
     <div className="navbar bg-[#005FA1] text-white shadow-lg px-6 flex flex-row-reverse">
+
+             <div className="ml-3 mr-3">
+         <ThemeToggle />
+</div>
       {/* Right side links */}
       <div className="flex-none hidden md:flex">
+           
         <ul className="menu menu-horizontal px-1 flex items-center gap-4">
           {navLinks.map((link, idx) => (
             <li key={idx}>
@@ -71,9 +76,11 @@ function Navbar() {
               تسجيل الخروج
             </button>
           </li>
+       
         </ul>
       </div>
 
+ 
       {/* Mobile Menu Button */}
       <div className="md:hidden flex items-center">
         <button onClick={() => setMenuOpen(!menuOpen)}>
@@ -109,6 +116,7 @@ function Navbar() {
                 تسجيل الخروج
               </button>
             </li>
+            
           </ul>
         </div>
       )}

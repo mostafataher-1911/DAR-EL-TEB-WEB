@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../layout/Navbar";
 import Loading from "../component/Loading";
-import CustomInputicon from "../component/CustomInputicon";
-import GenderSelector from "../component/GenderSelector";
-import CustomButton from "../component/CustomButton";
 import {
   BanknotesIcon,
   BuildingLibraryIcon,
@@ -14,7 +10,6 @@ import {
   UserIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
-import CustomSelect from "../component/CustomSelect";
 import toast, { Toaster } from "react-hot-toast";
 
 function Dashboard() {
@@ -128,7 +123,7 @@ function Dashboard() {
       setForm({
         name: user.name,
         phone: user.phone,
-        gender: user.gender, // ✅ سيتم عرض القيمة الصحيحة
+        gender: user.gender,
         coins: user.coins,
         union: user.union,
       });
@@ -138,7 +133,7 @@ function Dashboard() {
       setForm({ 
         name: "", 
         phone: "", 
-        gender: "ذكر", // ✅ قيمة افتراضية
+        gender: "ذكر",
         coins: "", 
         union: "" 
       });
@@ -161,7 +156,6 @@ function Dashboard() {
       return;
     }
 
-    // ✅ التحقق من وجود الرقم
     const phoneExists = data.some(
       (item) =>
         item.phone === form.phone && (!editUser || item.id !== editUser.id)
@@ -242,13 +236,11 @@ function Dashboard() {
     }
   };
 
-  // فتح مودال إضافة كوينز
   const openCoinsModal = () => {
     setCoinsForm({ phone: "", selectedLabs: [] });
     setShowCoinsModal(true);
   };
 
-  // إضافة كوينز للمستخدم
   const addCoinsToUser = async () => {
     const user = data.find((u) => u.phone === coinsForm.phone);
     if (!user) {
@@ -264,13 +256,11 @@ function Dashboard() {
       }
     });
 
-    // تحديث البيانات محليًا
     const updatedData = data.map((u) =>
       u.phone === user.phone ? { ...u, coins: u.coins + totalCoins } : u
     );
     setData(updatedData);
 
-    // تجهيز البيانات حسب API
     const payload = {
       phone: user.phone,
       coins: user.coins + totalCoins,
@@ -309,12 +299,12 @@ function Dashboard() {
     <>
       <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="p-4 sm:p-6 min-h-screen">
+      <div className="p-4 sm:p-6 min-h-screen bg-base-100 transition-colors duration-300">
         {/* البحث والفلتر والأزرار */}
         <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
           <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
             <button
-              className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#00457a] text-sm sm:text-base"
+              className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#005FA1] focus:bg-[#005FA1] text-sm sm:text-base transition-colors duration-200"
               onClick={() => openModal()}
             >
               <PlusCircleIcon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -322,7 +312,7 @@ function Dashboard() {
             </button>
 
             <button
-              className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-yellow-400 text-black rounded-lg shadow-md hover:bg-yellow-500 text-sm sm:text-base"
+              className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-warning text-base-100 rounded-lg shadow-md hover:bg-warning-focus text-sm sm:text-base transition-colors duration-200"
               onClick={openCoinsModal}
             >
               <CurrencyDollarIcon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -331,20 +321,23 @@ function Dashboard() {
           </div>
 
           <div className="w-full lg:flex-1 lg:max-w-md">
-            <CustomInputicon
-              type="number"
-              placeholder="... ابحث برقم المحمول "
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
+            <div className="relative">
+              <input
+                type="number"
+                placeholder="... ابحث برقم المحمول"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full bg-base-300 rounded-lg py-2 px-4 outline-none text-right border-2 border-transparent focus:border-[#005FA1] focus:bg-base-100 transition-colors duration-200"
+              />
+            </div>
           </div>
 
           <div className="w-full lg:w-auto">
             <select
-              className="p-2 border-2 outline-0 border-[#005FA1] text-[#005FA1] rounded-lg shadow-sm w-full lg:w-48"
+              className="p-2 border-2 outline-0 border-[#005FA1] text-[#005FA1] bg-base-100 rounded-lg shadow-sm w-full lg:w-48 transition-colors duration-200 focus:border-[#005FA1]-focus"
               value={filterUnion}
               onChange={(e) => {
                 const unionName = e.target.value;
@@ -368,7 +361,7 @@ function Dashboard() {
           <Loading />
         ) : (
           <>
-            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+            <div className="overflow-x-auto bg-base-200 rounded-lg shadow-md transition-colors duration-300">
               <table className="table table-zebra w-full text-center">
                 <thead className="bg-[#005FA1] text-white">
                   <tr>
@@ -384,23 +377,23 @@ function Dashboard() {
                 <tbody>
                   {paginatedData.length > 0 ? (
                     paginatedData.map((item, index) => (
-                      <tr key={item.id} className="hover:bg-gray-50">
-                        <td className="p-3">{startIndex + index + 1}</td>
-                        <td className="p-3">{item.name}</td>
-                        <td className="p-3">{item.phone}</td>
-                        <td className="p-3">{item.gender}</td>
-                        <td className="p-3">{item.coins}</td>
-                        <td className="p-3">{item.union}</td>
+                      <tr key={item.id} className="hover:bg-base-300 transition-colors duration-200">
+                        <td className="p-3 text-base-content">{startIndex + index + 1}</td>
+                        <td className="p-3 text-base-content">{item.name}</td>
+                        <td className="p-3 text-base-content">{item.phone}</td>
+                        <td className="p-3 text-base-content">{item.gender}</td>
+                        <td className="p-3 text-base-content">{item.coins}</td>
+                        <td className="p-3 text-base-content">{item.union}</td>
                         <td className="p-3">
                           <div className="flex justify-center gap-3">
                             <button
-                              className="text-blue-600 hover:text-blue-800 transition-colors"
+                              className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
                               onClick={() => openModal(item)}
                             >
                               <PencilSquareIcon className="w-5 h-5" />
                             </button>
                             <button
-                              className="text-red-600 hover:text-red-800 transition-colors"
+                              className="text-red-600 hover:text-red-800 transition-colors duration-200"
                               onClick={() => deleteUser(item.id)}
                             >
                               <TrashIcon className="w-5 h-5" />
@@ -411,7 +404,7 @@ function Dashboard() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="7" className="p-4 text-center text-gray-500">
+                      <td colSpan="7" className="p-4 text-center text-base-content opacity-70">
                         لا توجد نتائج مطابقة
                       </td>
                     </tr>
@@ -425,14 +418,14 @@ function Dashboard() {
                 <div className="flex justify-center mt-6">
                   <div className="join">
                     <button
-                      className="join-item btn bg-[#005FA1] text-white px-4 py-2"
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#005FA1] transition-colors duration-200"
                       disabled={page === 1}
                       onClick={() => setPage((p) => p - 1)}
                     >
                       الصفحة السابقة
                     </button>
                     <button
-                      className="join-item btn bg-[#005FA1] text-white px-4 py-2"
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#005FA1] transition-colors duration-200"
                       disabled={page === totalPages}
                       onClick={() => setPage((p) => p + 1)}
                     >
@@ -441,7 +434,7 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <p className="text-center mt-2 text-gray-600">
+                <p className="text-center mt-2 text-base-content opacity-70">
                   صفحة {page} من {totalPages}
                 </p>
               </>
@@ -452,8 +445,8 @@ function Dashboard() {
 
       {/* مودال إضافة مستخدم */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
+          <div className="bg-base-200 rounded-lg shadow-lg p-6 w-full max-w-md transition-colors duration-300">
             <h1 className="text-2xl font-bold text-[#005FA1] mb-4 text-right">
               {editUser ? "تعديل الحساب" : "إضافة حساب جديد"}
             </h1>
@@ -461,25 +454,30 @@ function Dashboard() {
             <div className="space-y-4">
               {/* اسم المستخدم */}
               <div className="w-full">
-                <CustomInputicon
-                  icon={<UserIcon className="w-5 h-5" />}
-                  placeholder="اسم المستخدم"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                    <UserIcon className="w-5 h-5 text-base-content opacity-70" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="اسم المستخدم"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200"
+                  />
+                </div>
               </div>
 
-              {/* النوع - تصميم مخصص */}
+              {/* النوع */}
               <div className="w-full">
-                <label className="block text-right text-gray-700 mb-2">النوع</label>
+                <label className="block text-right text-base-content mb-2">النوع</label>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all duration-200 font-medium ${
                       form.gender === "ذكر"
-                        ? "bg-blue-500 text-white border-blue-500 shadow-md"
-                        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                        ? "bg-[#005FA1] text-base-100 border-[#005FA1] shadow-md"
+                        : "bg-base-300 text-base-content border-base-300 hover:bg-base-400"
                     }`}
                     onClick={() => setForm({ ...form, gender: "ذكر" })}
                   >
@@ -489,64 +487,86 @@ function Dashboard() {
                     type="button"
                     className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all duration-200 font-medium ${
                       form.gender === "أنثى"
-                        ? "bg-pink-500 text-white border-pink-500 shadow-md"
-                        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                        ? "bg-secondary text-base-100 border-secondary shadow-md"
+                        : "bg-base-300 text-base-content border-base-300 hover:bg-base-400"
                     }`}
                     onClick={() => setForm({ ...form, gender: "أنثى" })}
                   >
                     أنثى
                   </button>
                 </div>
-                {/* عرض القيمة الحالية للتأكد */}
-                <p className="text-xs text-gray-500 text-right mt-1">
+                <p className="text-xs text-base-content opacity-70 text-right mt-1">
                   القيمة المحددة: {form.gender || "لم يتم التحديد"}
                 </p>
               </div>
 
               {/* رقم المحمول */}
               <div className="w-full">
-                <CustomInputicon
-                  icon={<PhoneIcon className="w-5 h-5" />}
-                  type="text"
-                  placeholder="رقم المحمول"
-                  value={form.phone}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (/^\d*$/.test(value) && value.length <= 10) {
-                      setForm({ ...form, phone: value });
-                    }
-                  }}
-                  className="w-full"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                    <PhoneIcon className="w-5 h-5 text-base-content opacity-70" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="رقم المحمول"
+                    value={form.phone}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d*$/.test(value) && value.length <= 10) {
+                        setForm({ ...form, phone: value });
+                      }
+                    }}
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200"
+                  />
+                </div>
               </div>
 
               {/* عدد الكوينز */}
               <div className="w-full">
-                <CustomInputicon
-                  icon={<BanknotesIcon className="w-5 h-5" />}
-                  type="number"
-                  placeholder="عدد الكوينز"
-                  value={form.coins}
-                  onChange={(e) => setForm({ ...form, coins: e.target.value })}
-                  className="w-full"
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                    <BanknotesIcon className="w-5 h-5 text-base-content opacity-70" />
+                  </div>
+                  <input
+                    type="number"
+                    placeholder="عدد الكوينز"
+                    value={form.coins}
+                    onChange={(e) => setForm({ ...form, coins: e.target.value })}
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200"
+                  />
+                </div>
               </div>
 
               {/* اختيار النقابة */}
               <div className="w-full">
-                <CustomSelect
-                  icon={<BuildingLibraryIcon className="w-5 h-5" />}
-                  value={form.union}
-                  onChange={(val) => setForm({ ...form, union: val })}
-                  defaultValue="اختر النقابة"
-                  options={unions.map((u) => u.name)}
-                />
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                    <BuildingLibraryIcon className="w-5 h-5 text-[#005FA1]" />
+                  </div>
+                  <select
+                    value={form.union}
+                    onChange={(e) => setForm({ ...form, union: e.target.value })}
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent appearance-none transition-colors duration-200"
+                  >
+                    <option value="">اختر النقابة</option>
+                    {unions.map((u) => (
+                      <option key={u.id} value={u.name}>
+                        {u.name}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg className="w-4 h-4 text-base-content opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors"
+                className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200"
                 onClick={() => setShowModal(false)}
                 disabled={saving}
               >
@@ -555,15 +575,15 @@ function Dashboard() {
               <button
                 onClick={saveUser}
                 disabled={saving}
-                className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 ${
                   saving 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-[#005FA1] hover:bg-[#00457a] text-white'
+                    ? 'bg-base-400 cursor-not-allowed' 
+                    : 'bg-[#005FA1] hover:bg-[#005FA1]/80 text-base-100'
                 }`}
               >
                 {saving ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-base-100 border-t-transparent rounded-full animate-spin"></div>
                     جاري الحفظ...
                   </>
                 ) : (
@@ -577,34 +597,38 @@ function Dashboard() {
 
       {/* مودال إضافة كوينز */}
       {showCoinsModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
+          <div className="bg-base-200 rounded-lg shadow-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transition-colors duration-300">
             <h1 className="text-2xl font-bold text-[#005FA1] mb-4 text-right">
               إضافة كوينز
             </h1>
 
             {/* رقم الهاتف */}
             <div className="mb-4">
-              <CustomInputicon
-                placeholder="رقم المحمول"
-                value={coinsForm.phone}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, "");
-                  if (value.length <= 10) {
-                    setCoinsForm({ ...coinsForm, phone: value });
-                  }
-                }}
-                maxLength={10}
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="رقم المحمول"
+                  value={coinsForm.phone}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    if (value.length <= 10) {
+                      setCoinsForm({ ...coinsForm, phone: value });
+                    }
+                  }}
+                  maxLength={10}
+                  className="w-full bg-base-100 border border-base-300 rounded-lg py-3 px-4 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200"
+                />
+              </div>
             </div>
 
             {/* البحث والتحاليل */}
-            <div className="p-4 bg-gray-50 rounded-lg">
+            <div className="p-4 bg-base-300 rounded-lg transition-colors duration-200">
               <div className="mb-4">
                 <input
                   type="text"
                   placeholder="ابحث عن التحليل..."
-                  className="input input-bordered w-full border-[#005FA1] focus:outline-none focus:ring-0"
+                  className="w-full bg-base-100 border border-base-300 rounded-lg py-2 px-4 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200"
                   onChange={(e) =>
                     setCoinsForm({ ...coinsForm, searchLab: e.target.value })
                   }
@@ -632,15 +656,14 @@ function Dashboard() {
                         className={`flex items-center justify-between p-3 border rounded-lg transition-all duration-200 ${
                           isSelected
                             ? "bg-[#005FA1]/20 border-[#005FA1]"
-                            : "bg-white hover:bg-[#005FA1]/10 border-gray-200"
+                            : "bg-base-100 hover:bg-base-300 border-base-300"
                         }`}
                       >
                         <label className="flex items-center gap-3 cursor-pointer">
                           <input
                             type="checkbox"
-                            className="checkbox"
+                            className="checkbox bg-base-100 border-base-300 checked:bg-[#005FA1] checked:border-[#005FA1]"
                             style={{
-                              accentColor: "#005FA1",
                               outline: "none",
                               boxShadow: "none",
                             }}
@@ -664,7 +687,7 @@ function Dashboard() {
                               }
                             }}
                           />
-                          <span className="font-medium text-gray-800">{lab.name}</span>
+                          <span className="font-medium text-base-content">{lab.name}</span>
                         </label>
 
                         <input
@@ -672,7 +695,7 @@ function Dashboard() {
                           placeholder="%"
                           value={labDiscount || ""}
                           disabled={!isSelected}
-                          className="input input-bordered input-sm w-20 border-[#005FA1] focus:outline-none focus:ring-0"
+                          className="input input-bordered input-sm w-20 border-base-300 focus:outline-none focus:ring-0 bg-base-100 text-base-content disabled:bg-base-200 disabled:text-base-content/50 transition-colors duration-200"
                           onChange={(e) => {
                             const numValue = Number(e.target.value);
                             if (numValue >= 0 && numValue <= 100) {
@@ -692,12 +715,17 @@ function Dashboard() {
             {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors"
+                className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200"
                 onClick={() => setShowCoinsModal(false)}
               >
                 إلغاء
               </button>
-              <CustomButton text="إضافة" onClick={addCoinsToUser} />
+              <button
+                className="px-4 py-2 bg-[#005FA1] text-base-100 rounded-lg hover:bg-[#005FA1]/80 transition-colors duration-200"
+                onClick={addCoinsToUser}
+              >
+                إضافة
+              </button>
             </div>
           </div>
         </div>

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import {
-  PaperAirplaneIcon,
-} from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 function NotificationsPage() {
   const [loading, setLoading] = useState(false);
@@ -48,8 +46,8 @@ function NotificationsPage() {
   return (
     <>
       <Toaster position="top-center" />
-      <div className="p-6 min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+      <div className="p-6 min-h-screen flex items-center justify-center bg-base-100 transition-colors duration-300">
+        <div className="bg-base-200 rounded-lg shadow-lg p-6 w-full max-w-md transition-colors duration-300">
           <h1 className="text-2xl font-bold text-[#005FA1] mb-6 text-center">
             إرسال إشعار
           </h1>
@@ -57,25 +55,25 @@ function NotificationsPage() {
           <div className="space-y-4">
             {/* عنوان الإشعار */}
             <div>
-              <label className="block text-right text-gray-700 mb-2">عنوان الإشعار</label>
+              <label className="block text-right text-base-content mb-2">عنوان الإشعار</label>
               <input
                 type="text"
                 placeholder="اكتب عنوان الإشعار"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full bg-gray-200 rounded-lg py-3 px-4 outline-none text-right border-2 border-transparent focus:border-[#005FA1]"
+                className="w-full bg-base-300 rounded-lg py-3 px-4 outline-none text-right border-2 border-transparent focus:border-primary focus:bg-base-100 transition-colors duration-200"
               />
             </div>
 
             {/* محتوى الإشعار */}
             <div>
-              <label className="block text-right text-gray-700 mb-2">محتوى الإشعار</label>
+              <label className="block text-right text-base-content mb-2">محتوى الإشعار</label>
               <textarea
                 placeholder="اكتب محتوى الإشعار هنا..."
                 value={form.body}
                 onChange={(e) => setForm({ ...form, body: e.target.value })}
                 rows="4"
-                className="w-full bg-gray-200 rounded-lg py-3 px-4 outline-none text-right resize-none border-2 border-transparent focus:border-[#005FA1]"
+                className="w-full bg-base-300 rounded-lg py-3 px-4 outline-none text-right resize-none border-2 border-transparent focus:border-primary focus:bg-base-100 transition-colors duration-200"
               />
             </div>
 
@@ -83,15 +81,15 @@ function NotificationsPage() {
             <button
               onClick={sendNotification}
               disabled={loading || !form.title.trim() || !form.body.trim()}
-              className={`w-full py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 ${
+              className={`w-full py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 ${
                 loading || !form.title.trim() || !form.body.trim()
-                  ? 'bg-gray-400 cursor-not-allowed text-white'
-                  : 'bg-[#005FA1] hover:bg-[#00457a] text-white'
+                  ? 'bg-gray-400 cursor-not-allowed text-base-100'
+                  : 'bg-primary hover:bg-primary-focus text-base-100 hover:shadow-md'
               }`}
             >
               {loading ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-base-100 border-t-transparent rounded-full animate-spin"></div>
                   جاري الإرسال...
                 </>
               ) : (

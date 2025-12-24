@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../layout/Navbar";
-import CustomInputicon from "../component/CustomInputicon";
-import CustomButton from "../component/CustomButton";
 import Loading from "../component/Loading";
-import CustomSelect from "../component/CustomSelect";
 import { Toaster, toast } from "react-hot-toast";
 import {
   PencilSquareIcon,
@@ -61,7 +57,6 @@ function DashboardLabTests() {
       const catRes = await fetch("https://apilab-dev.runasp.net/api/Category/GetAll");
       const catData = await catRes.json();
       if (catData.success) {
-        // ترتيب الأنواع حسب orderRank
         const sortedTypes = catData.resource.sort((a, b) => a.orderRank - b.orderRank);
         setTypes(sortedTypes);
       }
@@ -76,7 +71,6 @@ function DashboardLabTests() {
     }
   };
 
-  // دالة للتحقق من أن رقم الترتيب غير مكرر
   const isOrderRankUnique = (orderRank, excludeId = null) => {
     return !types.some(type => 
       type.orderRank === Number(orderRank) && 
@@ -84,10 +78,8 @@ function DashboardLabTests() {
     );
   };
 
-  // دالة لإيجاد أقرب رقم ترتيب متاح
   const getNextAvailableOrderRank = () => {
     if (types.length === 0) return 1;
-    
     const maxOrderRank = Math.max(...types.map(t => t.orderRank));
     return maxOrderRank + 1;
   };
@@ -139,7 +131,6 @@ function DashboardLabTests() {
 
   const openTypeModal = () => {
     setNewType("");
-    // اقتراح رقم ترتيب تالي تلقائيًا
     setNewTypeOrder(getNextAvailableOrderRank().toString());
     setEditType(null);
     setShowTypeModal(true);
@@ -244,7 +235,6 @@ function DashboardLabTests() {
       return;
     }
 
-    // التحقق من أن الاسم غير مكرر
     const nameExists = types.some(type => 
       type.name.toLowerCase() === newType.trim().toLowerCase()
     );
@@ -254,7 +244,6 @@ function DashboardLabTests() {
       return;
     }
 
-    // التحقق من أن رقم الترتيب غير مكرر
     if (!isOrderRankUnique(newTypeOrder)) {
       toast.error(`رقم الترتيب ${newTypeOrder} مستخدم بالفعل. اختر رقمًا آخر`);
       return;
@@ -275,9 +264,9 @@ function DashboardLabTests() {
       const data = await res.json();
       if (data.success) {
         toast.success("تمت إضافة النوع بنجاح");
-        fetchData(); // إعادة تحميل البيانات للحصول على الترتيب الصحيح
+        fetchData();
         setNewType("");
-        setNewTypeOrder(getNextAvailableOrderRank().toString()); // تحديث للرقم التالي
+        setNewTypeOrder(getNextAvailableOrderRank().toString());
       } else {
         toast.error(data.message || "حدث خطأ أثناء الإضافة");
       }
@@ -299,7 +288,6 @@ function DashboardLabTests() {
       return;
     }
 
-    // التحقق من أن الاسم غير مكرر (باستثناء النوع الحالي)
     const nameExists = types.some(type => 
       type.name.toLowerCase() === newType.trim().toLowerCase() &&
       type.id !== editType.id
@@ -310,7 +298,6 @@ function DashboardLabTests() {
       return;
     }
 
-    // التحقق من أن رقم الترتيب غير مكرر (باستثناء النوع الحالي)
     if (!isOrderRankUnique(newTypeOrder, editType.id)) {
       toast.error(`رقم الترتيب ${newTypeOrder} مستخدم بالفعل. اختر رقمًا آخر`);
       return;
@@ -332,7 +319,7 @@ function DashboardLabTests() {
       const data = await res.json();
       if (data.success) {
         toast.success("تم تعديل النوع بنجاح");
-        fetchData(); // إعادة تحميل البيانات للحصول على الترتيب الصحيح
+        fetchData();
         setNewType("");
         setNewTypeOrder("");
         setEditType(null);
@@ -360,7 +347,7 @@ function DashboardLabTests() {
       const data = await res.json();
       if (data.success) {
         toast.success("تم حذف النوع بنجاح");
-        fetchData(); // إعادة تحميل البيانات بعد الحذف
+        fetchData();
       } else {
         toast.error(data.message || "تعذر حذف النوع");
       }
@@ -388,13 +375,11 @@ function DashboardLabTests() {
   const startIndex = (page - 1) * itemsPerPage;
   const paginatedTests = filteredTests.slice(startIndex, startIndex + itemsPerPage);
 
-  // Component for loading spinner
   const LoadingSpinner = ({ size = "small" }) => (
     <div className={`inline-block animate-spin rounded-full border-2 border-solid border-current border-r-transparent 
       ${size === "small" ? "w-4 h-4" : "w-5 h-5"}`} />
   );
 
-  // اقتراح أرقام الترتيب المتاحة
   const suggestAvailableOrderRanks = () => {
     const usedRanks = types.map(t => t.orderRank);
     const maxRank = usedRanks.length > 0 ? Math.max(...usedRanks) : 0;
@@ -413,7 +398,7 @@ function DashboardLabTests() {
   return (
     <>
       <Toaster position="top-center" />
-      <div className="p-4 sm:p-6 min-h-screen">
+      <div className="p-4 sm:p-6 min-h-screen bg-base-100 transition-colors duration-300">
         {loading ? (
           <Loading />
         ) : (
@@ -423,7 +408,7 @@ function DashboardLabTests() {
               {/* الأزرار */}
               <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
                 <button
-                  className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#00457a] text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#00457a] text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   onClick={() => openTestModal()}
                   disabled={savingTest}
                 >
@@ -441,7 +426,7 @@ function DashboardLabTests() {
                 </button>
 
                 <button
-                  className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-800 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   onClick={openTypeModal}
                   disabled={savingType}
                 >
@@ -466,7 +451,7 @@ function DashboardLabTests() {
                   placeholder="ابحث باسم التحليل..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="border-2 border-[#005FA1] rounded-lg py-2 px-3 w-full sm:w-64 text-right text-[#005FA1] outline-none focus:ring-0 focus:outline-none"
+                  className="border-2 border-[#005FA1] bg-base-100 rounded-lg py-2 px-3 w-full sm:w-64 text-right text-[#005FA1] outline-none focus:ring-0 focus:outline-none transition-colors duration-200"
                 />
 
                 <select
@@ -475,7 +460,7 @@ function DashboardLabTests() {
                     setFilterType(e.target.value);
                     setPage(1);
                   }}
-                  className="text-[#005FA1] border-2 border-[#005FA1] rounded-lg py-2 px-3 w-full sm:w-64 outline-none focus:outline-none"
+                  className="text-[#005FA1] border-2 border-[#005FA1] bg-base-100 rounded-lg py-2 px-3 w-full sm:w-64 outline-none focus:outline-none transition-colors duration-200"
                 >
                   <option value="">جميع انواع التحاليل</option>
                   {types.map((t) => (
@@ -488,7 +473,7 @@ function DashboardLabTests() {
             </div>
 
             {/* الجدول */}
-            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+            <div className="overflow-x-auto bg-base-200 rounded-lg shadow-md transition-colors duration-300">
               <table className="table table-zebra w-full text-center">
                 <thead className="bg-[#005FA1] text-white">
                   <tr>
@@ -505,8 +490,8 @@ function DashboardLabTests() {
                 <tbody>
                   {paginatedTests.length > 0 ? (
                     paginatedTests.map((item, index) => (
-                      <tr key={item.id} className="hover:bg-gray-50">
-                        <td className="p-3">{startIndex + index + 1}</td>
+                      <tr key={item.id} className="hover:bg-base-300 transition-colors duration-200">
+                        <td className="p-3 text-base-content">{startIndex + index + 1}</td>
                         <td className="p-3">
                           {item.imageUrl ? (
                             <img
@@ -515,20 +500,20 @@ function DashboardLabTests() {
                               className="w-12 h-12 object-cover rounded-full mx-auto"
                             />
                           ) : (
-                            <span className="text-gray-400">لا توجد صورة</span>
+                            <span className="text-base-content opacity-70">لا توجد صورة</span>
                           )}
                         </td>
-                        <td className="p-3">{item.name}</td>
-                        <td className="p-3">
+                        <td className="p-3 text-base-content">{item.name}</td>
+                        <td className="p-3 text-base-content">
                           {types.find((t) => t.id === item.categoryId)?.name || "-"}
                         </td>
-                        <td className="p-3">{item.price} ج.م</td>
-                        <td className="p-3">{item.coins || 0}</td>
-                        <td className="p-3">{item.unionCoins || 0}</td>
+                        <td className="p-3 text-base-content">{item.price} ج.م</td>
+                        <td className="p-3 text-base-content">{item.coins || 0}</td>
+                        <td className="p-3 text-base-content">{item.unionCoins || 0}</td>
                         <td className="p-3">
                           <div className="flex justify-center gap-3">
                             <button
-                              className="text-blue-600 hover:text-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="text-blue-600 hover:text-blue-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                               onClick={() => openTestModal(item)}
                               disabled={savingTest || deletingTestId}
                               title="تعديل"
@@ -536,7 +521,7 @@ function DashboardLabTests() {
                               <PencilSquareIcon className="w-5 h-5" />
                             </button>
                             <button
-                              className="text-red-600 hover:text-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="text-red-600 hover:text-red-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                               onClick={() => deleteTest(item.id)}
                               disabled={deletingTestId === item.id || savingTest}
                               title="حذف"
@@ -553,7 +538,7 @@ function DashboardLabTests() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="8" className="p-4 text-center text-gray-500">
+                      <td colSpan="8" className="p-4 text-center text-base-content opacity-70">
                         لا توجد تحاليل مضافة بعد
                       </td>
                     </tr>
@@ -568,14 +553,14 @@ function DashboardLabTests() {
                 <div className="flex justify-center mt-6">
                   <div className="join">
                     <button
-                      className="join-item btn bg-[#005FA1] text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="join-item btn bg-[#005FA1] text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#00457a] transition-colors duration-200"
                       disabled={page === 1 || savingTest}
                       onClick={() => setPage((p) => p - 1)}
                     >
                       الصفحة السابقة
                     </button>
                     <button
-                      className="join-item btn bg-[#005FA1] text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="join-item btn bg-[#005FA1] text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#00457a] transition-colors duration-200"
                       disabled={page === totalPages || savingTest}
                       onClick={() => setPage((p) => p + 1)}
                     >
@@ -584,7 +569,7 @@ function DashboardLabTests() {
                   </div>
                 </div>
 
-                <p className="text-center mt-2 text-gray-600">
+                <p className="text-center mt-2 text-base-content opacity-70">
                   صفحة {page} من {totalPages}
                 </p>
               </>
@@ -595,21 +580,29 @@ function DashboardLabTests() {
 
       {/* مودال التحليل */}
       {showTestModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
+          <div className="bg-base-200 rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transition-colors duration-300">
             <h1 className="text-xl sm:text-2xl font-bold text-[#005FA1] mb-4 text-right">
               {editTest ? "تعديل التحليل" : "إضافة تحليل جديد"}
             </h1>
 
             <div className="space-y-4">
-              <CustomInputicon
-                icon={<BeakerIcon className="w-5 h-5" />}
-                placeholder="اسم التحليل"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                disabled={savingTest}
-              />
+              {/* اسم التحليل */}
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <BeakerIcon className="w-5 h-5 text-[#005FA1]" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="اسم التحليل"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200 disabled:opacity-50"
+                  disabled={savingTest}
+                />
+              </div>
 
+              {/* السعر */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -617,15 +610,16 @@ function DashboardLabTests() {
                     placeholder="0"
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="w-full bg-gray-200 rounded-lg py-2 pr-14 pl-3 outline-none text-right disabled:opacity-50"
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-14 pl-3 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200 disabled:opacity-50"
                     disabled={savingTest}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 font-medium">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content opacity-70 font-medium">
                     ج.م
                   </span>
                 </div>
               </div>
 
+              {/* كوينز */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -633,15 +627,16 @@ function DashboardLabTests() {
                     placeholder="0"
                     value={form.coins}
                     onChange={(e) => setForm({ ...form, coins: e.target.value })}
-                    className="w-full bg-gray-200 rounded-lg py-2 pr-14 pl-3 outline-none text-left disabled:opacity-50"
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-14 pl-3 outline-none text-left focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200 disabled:opacity-50"
                     disabled={savingTest}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 font-medium">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content opacity-70 font-medium">
                     coins
                   </span>
                 </div>
               </div>
 
+              {/* كوينز النقابات */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -649,31 +644,46 @@ function DashboardLabTests() {
                     placeholder="0"
                     value={form.unionCoins}
                     onChange={(e) => setForm({ ...form, unionCoins: e.target.value })}
-                    className="w-full bg-gray-200 rounded-lg py-2 pr-14 pl-3 outline-none text-left disabled:opacity-50"
+                    className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-14 pl-3 outline-none text-left focus:ring-2 focus:ring-[#005FA1] focus:border-transparent transition-colors duration-200 disabled:opacity-50"
                     disabled={savingTest}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 font-medium">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content opacity-70 font-medium">
                     النقابات
                   </span>
                 </div>
               </div>
 
               {/* اختيار النوع */}
-              <CustomSelect
-                icon={<BeakerIcon className="w-5 h-5 text-[#005FA1]" />}
-                value={form.type}
-                onChange={(val) => {
-                  const selected = types.find((t) => t.name === val);
-                  setForm({
-                    ...form,
-                    type: val,
-                    categoryId: selected ? selected.id : "",
-                  });
-                }}
-                defaultValue="اختر النوع"
-                options={types.map((t) => `${t.name} (الترتيب: ${t.orderRank})`)}
-                disabled={savingTest}
-              />
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <BeakerIcon className="w-5 h-5 text-[#005FA1]" />
+                </div>
+                <select
+                  value={form.type}
+                  onChange={(val) => {
+                    const selected = types.find((t) => t.name === val.target.value);
+                    setForm({
+                      ...form,
+                      type: val.target.value,
+                      categoryId: selected ? selected.id : "",
+                    });
+                  }}
+                  className="w-full bg-base-100 border border-base-300 rounded-lg py-2 pr-10 pl-10 outline-none text-right focus:ring-2 focus:ring-[#005FA1] focus:border-transparent appearance-none transition-colors duration-200 disabled:opacity-50"
+                  disabled={savingTest}
+                >
+                  <option value="">اختر النوع</option>
+                  {types.map((t) => (
+                    <option key={t.id} value={t.name}>
+                      {t.name} (الترتيب: {t.orderRank})
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <svg className="w-4 h-4 text-base-content opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+              </div>
 
               {/* رفع صورة */}
               <div className="mb-4">
@@ -682,7 +692,7 @@ function DashboardLabTests() {
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full mb-2 disabled:opacity-50"
+                  className="w-full mb-2 bg-base-100 border border-base-300 rounded-lg py-2 px-3 disabled:opacity-50 transition-colors duration-200"
                   disabled={savingTest}
                 />
 
@@ -691,12 +701,12 @@ function DashboardLabTests() {
                     <img
                       src={form.image ? `data:image/*;base64,${form.image}` : `https://apilab-dev.runasp.net${editTest.imageUrl}`}
                       alt="preview"
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-lg border-2 border-base-300"
                     />
                     <button
                       type="button"
                       onClick={() => setForm({ ...form, image: "" })}
-                      className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1 hover:bg-red-800 disabled:opacity-50"
+                      className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1 hover:bg-red-700 disabled:opacity-50 transition-colors duration-200"
                       disabled={savingTest}
                     >
                       <XMarkIcon className="w-4 h-4" />
@@ -709,14 +719,14 @@ function DashboardLabTests() {
             {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setShowTestModal(false)}
                 disabled={savingTest}
               >
                 إلغاء
               </button>
               <button
-                className="px-4 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#00457a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 min-w-[100px] justify-center"
+                className="px-4 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#00457a] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 min-w-[100px] justify-center"
                 onClick={saveTest}
                 disabled={savingTest}
               >
@@ -734,11 +744,11 @@ function DashboardLabTests() {
         </div>
       )}
 
-      {/* مودال الأنواع - محسن */}
+      {/* مودال الأنواع */}
       {showTypeModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <h1 className="text-xl sm:text-2xl font-bold text-green-700 mb-4 text-right">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
+          <div className="bg-base-200 rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto transition-colors duration-300">
+            <h1 className="text-xl sm:text-2xl font-bold text-[#005FA1] mb-4 text-right">
               {editType ? "تعديل النوع" : "إدارة أنواع التحاليل"}
             </h1>
 
@@ -750,7 +760,7 @@ function DashboardLabTests() {
                   placeholder="اسم النوع"
                   value={newType}
                   onChange={(e) => setNewType(e.target.value)}
-                  className="flex-1 bg-gray-100 border border-gray-300 rounded-lg py-2 px-3 outline-none text-right focus:border-[#005FA1] disabled:opacity-50"
+                  className="flex-1 bg-base-100 border border-base-300 rounded-lg py-2 px-3 outline-none text-right focus:border-[#005FA1] focus:ring-0 transition-colors duration-200 disabled:opacity-50"
                   disabled={savingType}
                 />
                 <input
@@ -758,7 +768,7 @@ function DashboardLabTests() {
                   placeholder="رقم الترتيب"
                   value={newTypeOrder}
                   onChange={(e) => setNewTypeOrder(e.target.value)}
-                  className="w-full sm:w-32 bg-gray-100 border border-gray-300 rounded-lg py-2 px-3 outline-none text-right focus:border-[#005FA1] disabled:opacity-50"
+                  className="w-full sm:w-32 bg-base-100 border border-base-300 rounded-lg py-2 px-3 outline-none text-right focus:border-[#005FA1] focus:ring-0 transition-colors duration-200 disabled:opacity-50"
                   disabled={savingType}
                   min="1"
                 />
@@ -766,7 +776,7 @@ function DashboardLabTests() {
                   {editType ? (
                     <>
                       <button
-                        className="flex-1 text-white bg-green-600 px-3 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="flex-1 text-white bg-green-600 px-3 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors duration-200"
                         onClick={updateType}
                         disabled={savingType}
                       >
@@ -780,7 +790,7 @@ function DashboardLabTests() {
                         )}
                       </button>
                       <button
-                        className="flex-1 text-white bg-gray-500 px-3 py-2 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex-1 text-white bg-base-400 px-3 py-2 rounded-lg hover:bg-base-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                         onClick={cancelEditType}
                         disabled={savingType}
                       >
@@ -789,7 +799,7 @@ function DashboardLabTests() {
                     </>
                   ) : (
                     <button
-                      className="w-full text-white bg-[#005FA1] px-3 py-2 rounded-lg hover:bg-[#00457a] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full text-white bg-[#005FA1] px-3 py-2 rounded-lg hover:bg-[#00457a] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors duration-200"
                       onClick={addType}
                       disabled={savingType}
                     >
@@ -808,7 +818,7 @@ function DashboardLabTests() {
               
               {/* رسائل التوجيه والتحذير */}
               {newTypeOrder && !isOrderRankUnique(newTypeOrder, editType?.id) && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div className="p-3 bg-red-100 border border-red-300 rounded-lg transition-colors duration-200">
                   <p className="text-red-600 text-sm text-right">
                     ⚠️ رقم الترتيب {newTypeOrder} مستخدم بالفعل.
                     <span className="block mt-1 text-red-500">
@@ -822,7 +832,7 @@ function DashboardLabTests() {
                 t.name.toLowerCase() === newType.trim().toLowerCase() && 
                 t.id !== editType?.id
               ) && (
-                <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg transition-colors duration-200">
                   <p className="text-yellow-600 text-sm text-right">
                     ⚠️ اسم النوع "{newType}" موجود بالفعل
                   </p>
@@ -831,7 +841,7 @@ function DashboardLabTests() {
               
               {/* عرض أرقام الترتيب المتاحة */}
               {!editType && (
-                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="p-3 bg-blue-100 border border-blue-300 rounded-lg transition-colors duration-200">
                   <p className="text-blue-600 text-sm text-right">
                     💡 اقتراحات لأرقام ترتيب متاحة: {suggestAvailableOrderRanks().join(', ')}
                   </p>
@@ -840,34 +850,34 @@ function DashboardLabTests() {
             </div>
 
             {/* قائمة الأنواع */}
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border border-base-300 rounded-lg overflow-hidden transition-colors duration-200">
               <table className="w-full text-right">
-                <thead className="bg-gray-100">
+                <thead className="bg-base-300">
                   <tr>
-                    <th className="p-3 font-semibold text-gray-700">الترتيب</th>
-                    <th className="p-3 font-semibold text-gray-700">اسم النوع</th>
-                    <th className="p-3 font-semibold text-gray-700">عدد التحاليل</th>
-                    <th className="p-3 font-semibold text-gray-700">الإجراءات</th>
+                    <th className="p-3 font-semibold text-base-content">الترتيب</th>
+                    <th className="p-3 font-semibold text-base-content">اسم النوع</th>
+                    <th className="p-3 font-semibold text-base-content">عدد التحاليل</th>
+                    <th className="p-3 font-semibold text-base-content">الإجراءات</th>
                   </tr>
                 </thead>
                 <tbody>
                   {types.map((t) => (
-                    <tr key={t.id} className="border-t hover:bg-gray-50">
+                    <tr key={t.id} className="border-t border-base-300 hover:bg-base-300 transition-colors duration-200">
                       <td className="p-3">
-                        <span className="inline-flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-800 rounded-full font-bold">
+                        <span className="inline-flex items-center justify-center w-8 h-8 bg-[#005FA1]/20 text-[#005FA1] rounded-full font-bold">
                           {t.orderRank}
                         </span>
                       </td>
-                      <td className="p-3 font-medium">{t.name}</td>
+                      <td className="p-3 font-medium text-base-content">{t.name}</td>
                       <td className="p-3">
-                        <span className="inline-flex items-center justify-center w-8 h-8 bg-gray-100 text-gray-800 rounded-full text-sm">
+                        <span className="inline-flex items-center justify-center w-8 h-8 bg-base-300 text-base-content rounded-full text-sm">
                           {tests.filter(test => test.categoryId === t.id).length}
                         </span>
                       </td>
                       <td className="p-3">
                         <div className="flex justify-center gap-2">
                           <button
-                            className="text-blue-600 hover:text-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed p-2 hover:bg-blue-50 rounded"
+                            className="text-blue-600 hover:text-blue-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed p-2 hover:bg-blue-100 rounded"
                             onClick={() => openEditTypeModal(t)}
                             disabled={savingType || deletingTypeId || editingTypeId === t.id}
                             title="تعديل"
@@ -879,7 +889,7 @@ function DashboardLabTests() {
                             )}
                           </button>
                           <button
-                            className="text-red-600 hover:text-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed p-2 hover:bg-red-50 rounded"
+                            className="text-red-600 hover:text-red-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed p-2 hover:bg-red-100 rounded"
                             onClick={() => deleteType(t)}
                             disabled={deletingTypeId === t.id || savingType}
                             title="حذف"
@@ -899,8 +909,8 @@ function DashboardLabTests() {
             </div>
 
             {/* ملاحظات */}
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-gray-600 text-sm text-right">
+            <div className="mt-4 p-3 bg-base-300 rounded-lg transition-colors duration-200">
+              <p className="text-base-content text-sm text-right">
                 📝 <span className="font-medium">ملاحظات:</span> 
                 <span className="block mt-1">
                   • كل نوع يجب أن يكون له رقم ترتيب فريد
@@ -917,7 +927,7 @@ function DashboardLabTests() {
             {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setShowTypeModal(false)}
                 disabled={savingType}
               >

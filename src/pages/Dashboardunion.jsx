@@ -385,8 +385,8 @@ function Dashboardunion() {
 
     if (hasError || !src) {
       return (
-        <div className={`${className} bg-gray-100 flex items-center justify-center rounded-full`}>
-          <BuildingLibraryIcon className="w-6 h-6 text-gray-400" />
+        <div className={`${className} bg-base-300 flex items-center justify-center rounded-full`}>
+          <BuildingLibraryIcon className="w-6 h-6 text-base-content opacity-50" />
         </div>
       );
     }
@@ -404,7 +404,7 @@ function Dashboardunion() {
 
   return (
     <>
-      <div className="p-6 min-h-screen">
+      <div className="p-6 min-h-screen bg-base-100 transition-colors duration-300">
         {loading ? (
           <Loading />
         ) : (
@@ -412,7 +412,7 @@ function Dashboardunion() {
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-2xl font-bold text-[#005FA1]">إدارة النقابات</h1>
               <button
-                className="flex items-center gap-2 px-4 py-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#00457a] transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#005FA1] focus:ring-2 focus:ring-[#005FA1] transition-colors duration-200 disabled:opacity-50"
                 onClick={() => openModal()}
                 disabled={processing}
               >
@@ -421,22 +421,22 @@ function Dashboardunion() {
               </button>
             </div>
 
-            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-[#005FA1]">
+            <div className="overflow-x-auto bg-base-200 rounded-lg shadow-md transition-colors duration-300">
+              <table className="min-w-full divide-y divide-base-300">
+                <thead className="bg-[#005FA1] text-white">
                   <tr>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">#</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">الصورة</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">اسم النقابة</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">نسبة الخصم</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-white uppercase tracking-wider">الإجراءات</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">#</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">الصورة</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">اسم النقابة</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">نسبة الخصم</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">الإجراءات</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-base-200 divide-y divide-base-300 transition-colors duration-300">
                   {paginatedUnions.length > 0 ? (
                     paginatedUnions.map((item, index) => (
-                      <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                      <tr key={item.id} className="hover:bg-base-300 transition-colors duration-200">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-base-content text-center">
                           {(currentPage - 1) * itemsPerPage + index + 1}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -444,11 +444,11 @@ function Dashboardunion() {
                             <ImageWithFallback
                               src={item.imageUrl}
                               alt={item.name}
-                              className="w-12 h-12 rounded-full border border-gray-200"
+                              className="w-12 h-12 rounded-full border border-base-300"
                             />
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-right">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-base-content text-right">
                           {item.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold text-center">
@@ -457,7 +457,7 @@ function Dashboardunion() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex justify-center gap-2">
                             <button
-                              className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+                              className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors duration-200"
                               onClick={() => openModal(item)}
                               disabled={processing}
                               title="تعديل"
@@ -465,7 +465,7 @@ function Dashboardunion() {
                               <PencilSquareIcon className="w-5 h-5" />
                             </button>
                             <button
-                              className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors duration-200"
                               onClick={() => deleteUnion(item.id)}
                               disabled={processing}
                               title="حذف"
@@ -479,8 +479,8 @@ function Dashboardunion() {
                   ) : (
                     <tr>
                       <td colSpan="5" className="px-6 py-12 text-center">
-                        <div className="flex flex-col items-center text-gray-500">
-                          <BuildingLibraryIcon className="w-12 h-12 mb-3 text-gray-400" />
+                        <div className="flex flex-col items-center text-base-content opacity-70">
+                          <BuildingLibraryIcon className="w-12 h-12 mb-3 opacity-50" />
                           <p className="text-lg">لا توجد نقابات مضافة بعد</p>
                         </div>
                       </td>
@@ -493,17 +493,17 @@ function Dashboardunion() {
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-4 mt-6">
                 <button
-                  className="px-4 py-2 bg-[#005FA1] text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-[#00457a] transition-colors"
+                  className="px-4 py-2 bg-primary text-base-100 rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-primary-focus transition-colors duration-200"
                   disabled={currentPage === 1 || processing}
                   onClick={() => setCurrentPage(p => p - 1)}
                 >
                   السابق
                 </button>
-                <span className="text-gray-700 font-medium">
+                <span className="text-base-content font-medium">
                   صفحة {currentPage} من {totalPages}
                 </span>
                 <button
-                  className="px-4 py-2 bg-[#005FA1] text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-[#00457a] transition-colors"
+                  className="px-4 py-2 bg-primary text-base-100 rounded-lg disabled:bg-base-400 disabled:cursor-not-allowed hover:bg-primary-focus transition-colors duration-200"
                   disabled={currentPage === totalPages || processing}
                   onClick={() => setCurrentPage(p => p + 1)}
                 >
@@ -517,19 +517,19 @@ function Dashboardunion() {
 
       {/* Modal محسن مع Scroll */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 transition-colors duration-300">
+          <div className="bg-base-200 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col transition-colors duration-300">
             {/* Modal Header - ثابت */}
-            <div className="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
-              <h2 className="text-2xl font-bold text-[#005FA1]">
+            <div className="flex justify-between items-center p-6 border-b border-base-300 sticky top-0 bg-base-200 z-10">
+              <h2 className="text-2xl font-bold text-primary">
                 {editUnion ? "تعديل النقابة" : "إضافة نقابة جديدة"}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-base-300 rounded-full transition-colors duration-200"
                 disabled={processing}
               >
-                <XMarkIcon className="w-6 h-6 text-gray-500" />
+                <XMarkIcon className="w-6 h-6 text-base-content opacity-70" />
               </button>
             </div>
 
@@ -537,18 +537,18 @@ function Dashboardunion() {
             <div className="flex-1 overflow-y-auto p-6">
               {/* اسم النقابة */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   اسم النقابة *
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    <BuildingLibraryIcon className="w-5 h-5 text-[#005FA1]" />
+                    <BuildingLibraryIcon className="w-5 h-5 text-primary" />
                   </div>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full pr-3 pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005FA1] focus:border-transparent outline-none text-right"
+                    className="w-full pr-3 pl-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-right transition-colors duration-200"
                     placeholder="أدخل اسم النقابة"
                     disabled={processing}
                   />
@@ -557,7 +557,7 @@ function Dashboardunion() {
 
               {/* نسبة الخصم */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   نسبة الخصم (%) *
                 </label>
                 <div className="relative">
@@ -568,11 +568,11 @@ function Dashboardunion() {
                     step="0.1"
                     value={form.discount}
                     onChange={(e) => setForm({ ...form, discount: e.target.value })}
-                    className="w-full pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#005FA1] focus:border-transparent outline-none text-right"
+                    className="w-full pr-10 py-3 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-right transition-colors duration-200"
                     placeholder="0"
                     disabled={processing}
                   />
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content opacity-70">
                     %
                   </span>
                 </div>
@@ -580,9 +580,9 @@ function Dashboardunion() {
 
               {/* رفع الصورة */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2 text-right">
+                <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   {editUnion ? "تغيير صورة النقابة (اختياري)" : "صورة النقابة *"}
-                  <span className="text-xs text-gray-500 mr-2">(يمكنك رفع أي حجم)</span>
+                  <span className="text-xs text-base-content opacity-70 mr-2">(يمكنك رفع أي حجم)</span>
                 </label>
                 
                 {/* معاينة الصورة */}
@@ -592,12 +592,12 @@ function Dashboardunion() {
                       <img
                         src={form.image}
                         alt="معاينة الصورة"
-                        className="w-full h-full object-cover rounded-lg border-2 border-[#005FA1]"
+                        className="w-full h-full object-cover rounded-lg border-2 border-primary"
                       />
                       <button
                         type="button"
                         onClick={removeImage}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition-colors"
+                        className="absolute -top-2 -right-2 bg-error text-base-100 p-1 rounded-full hover:bg-error-focus transition-colors duration-200"
                         disabled={processing}
                       >
                         <XMarkIcon className="w-4 h-4" />
@@ -605,11 +605,11 @@ function Dashboardunion() {
                     </div>
                     {form.imageName && (
                       <div className="text-center mt-2">
-                        <p className="text-xs text-gray-500 truncate max-w-xs mx-auto">
+                        <p className="text-xs text-base-content opacity-70 truncate max-w-xs mx-auto">
                           {form.imageName}
                         </p>
                         {form.imageBase64 && (
-                          <p className="text-xs text-blue-600 mt-1">
+                          <p className="text-xs text-primary mt-1">
                             ✓ جاهزة للرفع
                           </p>
                         )}
@@ -620,13 +620,13 @@ function Dashboardunion() {
 
                 {/* زر رفع الصورة */}
                 <div className="flex justify-center">
-                  <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'} ${form.image ? 'border-gray-300' : 'border-[#005FA1]'}`}>
+                  <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-300'} ${form.image ? 'border-base-300' : 'border-primary'} transition-colors duration-200`}>
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <PhotoIcon className="w-8 h-8 mb-2 text-gray-400" />
-                      <p className="text-sm text-gray-600 font-medium mb-1">
+                      <PhotoIcon className="w-8 h-8 mb-2 text-base-content opacity-50" />
+                      <p className="text-sm text-base-content font-medium mb-1">
                         {form.image ? 'تغيير الصورة' : 'انقر لرفع صورة'}
                       </p>
-                      <p className="text-xs text-gray-400 text-center px-4">
+                      <p className="text-xs text-base-content opacity-70 text-center px-4">
                         يمكنك رفع الصور بأي حجم
                       </p>
                     </div>
@@ -642,8 +642,8 @@ function Dashboardunion() {
                 
                 {/* نص تحذيري */}
                 {form.imageBase64 && (
-                  <div className="mt-3 p-2 bg-blue-50 rounded-lg">
-                    <p className="text-xs text-blue-700 text-center">
+                  <div className="mt-3 p-2 bg-primary/10 rounded-lg">
+                    <p className="text-xs text-primary text-center">
                       ⚠️ الصور الكبيرة جداً قد تأخذ وقتاً طويلاً للرفع
                     </p>
                   </div>
@@ -652,11 +652,11 @@ function Dashboardunion() {
             </div>
 
             {/* Modal Footer - ثابت في الأسفل */}
-            <div className="p-6 border-t sticky bottom-0 bg-white">
+            <div className="p-6 border-t border-base-300 sticky bottom-0 bg-base-200">
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => setShowModal(false)}
-                  className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+                  className="px-6 py-2 text-base-content bg-base-300 rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50"
                   disabled={processing}
                 >
                   إلغاء
@@ -666,11 +666,11 @@ function Dashboardunion() {
                   <button
                     onClick={updateUnion}
                     disabled={processing || !form.name.trim()}
-                    className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                    className="px-6 py-2 bg-success text-base-100 rounded-lg hover:bg-success-focus transition-colors duration-200 disabled:opacity-50 flex items-center gap-2"
                   >
                     {processing ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-4 h-4 border-2 border-base-100 border-t-transparent rounded-full animate-spin"></div>
                         جارٍ الحفظ...
                       </>
                     ) : (
@@ -681,11 +681,11 @@ function Dashboardunion() {
                   <button
                     onClick={addUnion}
                     disabled={processing || !form.name.trim() || !form.imageBase64}
-                    className="px-6 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#00457a] transition-colors disabled:opacity-50 flex items-center gap-2"
+                    className="px-6 py-2 bg-primary text-base-100 rounded-lg hover:bg-primary-focus transition-colors duration-200 disabled:opacity-50 flex items-center gap-2"
                   >
                     {processing ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <div className="w-4 h-4 border-2 border-base-100 border-t-transparent rounded-full animate-spin"></div>
                         جارٍ الإضافة...
                       </>
                     ) : (

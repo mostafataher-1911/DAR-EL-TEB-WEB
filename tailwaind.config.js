@@ -4,13 +4,36 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-    darkMode: false,
+    darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Roboto", "sans-serif"], // Adding Roboto font as the default sans-serif font
+        sans: ["Roboto", "sans-serif"], 
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "#005FA1",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          primary: "#005FA1",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#2a2e37",
+          "base-100": "#ffffff",
+        }
+      }
+    ],
+    darkTheme: "dark",
+  },
 }

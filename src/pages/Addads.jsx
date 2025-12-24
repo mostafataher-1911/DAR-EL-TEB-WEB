@@ -5,8 +5,6 @@ import {
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-import CustomButton from "../component/CustomButton";
-import Navbar from "../layout/Navbar";
 import Loading from "../component/Loading";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -79,7 +77,7 @@ function Addads() {
       }
 
       const data = await res.json();
-      console.log("Ads API Response:", data); // للتdebug
+      console.log("Ads API Response:", data);
 
       // معالجة مختلف أشكال الرد
       if (Array.isArray(data)) {
@@ -152,7 +150,7 @@ function Addads() {
         toast.success("تم رفع الإعلان بنجاح ✅");
         handleRemoveImage();
         setShowModal(false);
-        fetchAds(); // إعادة تحميل البيانات من السيرفر
+        fetchAds();
       } else {
         toast.error(data.message || "حدث خطأ أثناء رفع الإعلان");
       }
@@ -206,8 +204,8 @@ function Addads() {
 
     if (hasError || !src) {
       return (
-        <div className={`${className} bg-gray-200 flex items-center justify-center rounded-md`}>
-          <PhotoIcon className="w-8 h-8 text-gray-400" />
+        <div className={`${className} bg-base-300 flex items-center justify-center rounded-md`}>
+          <PhotoIcon className="w-8 h-8 text-base-content opacity-50" />
         </div>
       );
     }
@@ -222,7 +220,7 @@ function Addads() {
     );
   };
 
-  // ✅ Pagination logic
+  // Pagination logic
   const totalPages = Math.ceil(ads.length / itemsPerPage);
   const currentAds = ads.slice(
     (currentPage - 1) * itemsPerPage,
@@ -230,16 +228,18 @@ function Addads() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-base-100 transition-colors duration-300">
       <Toaster position="top-center" />
 
       <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-[#005FA1]">إدارة الإعلانات</h1>
-          <div className="flex gap-3">
+          <h1 className="text-2xl font-bold text-[#005FA1]">
+            إدارة الإعلانات
+          </h1>
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-2 bg-[#005FA1] text-white px-4 py-2 rounded-lg hover:bg-[#004577] transition disabled:opacity-50"
+              className="flex items-center gap-2 bg-[#005FA1] text-white px-4 py-2 rounded-lg hover:bg-[#004577] transition-colors duration-200 disabled:opacity-50 shadow-md"
               disabled={uploading}
             >
               <PlusCircleIcon className="w-5 h-5" />
@@ -252,8 +252,8 @@ function Addads() {
           <Loading />
         ) : (
           <>
-            <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-              <table className="min-w-full border border-gray-200 text-center">
+            <div className="overflow-x-auto bg-base-200 rounded-lg shadow-md transition-colors duration-300">
+              <table className="min-w-full border border-base-300 text-center">
                 <thead className="bg-[#005FA1] text-white">
                   <tr>
                     <th className="px-4 py-3">#</th>
@@ -266,9 +266,9 @@ function Addads() {
                     currentAds.map((ad, index) => (
                       <tr
                         key={ad.id || index}
-                        className="border-t hover:bg-gray-50 transition"
+                        className="border-t border-base-300 hover:bg-base-300 transition-colors duration-200"
                       >
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-3 text-base-content">
                           {(currentPage - 1) * itemsPerPage + index + 1}
                         </td>
                         <td className="px-4 py-3">
@@ -281,7 +281,7 @@ function Addads() {
                         <td className="px-4 py-3">
                           <button
                             onClick={() => handleDeleteAd(ad.id)}
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition flex items-center gap-1 mx-auto disabled:opacity-50"
+                            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center gap-1 mx-auto disabled:opacity-50 shadow-sm"
                             disabled={uploading}
                           >
                             <TrashIcon className="w-5 h-5" />
@@ -294,7 +294,7 @@ function Addads() {
                     <tr>
                       <td
                         colSpan="3"
-                        className="text-gray-500 py-6 text-lg text-center"
+                        className="text-base-content opacity-70 py-6 text-lg text-center"
                       >
                         لا توجد إعلانات حالياً
                       </td>
@@ -309,14 +309,14 @@ function Addads() {
                 <div className="flex justify-center mt-6">
                   <div className="join">
                     <button
-                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-gray-400"
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-base-400 transition-colors duration-200"
                       disabled={currentPage === 1 || uploading}
                       onClick={() => setCurrentPage((p) => p - 1)}
                     >
                       الصفحة السابقة
                     </button>
                     <button
-                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-gray-400"
+                      className="join-item btn bg-[#005FA1] text-white hover:bg-[#004577] disabled:bg-base-400 transition-colors duration-200"
                       disabled={currentPage === totalPages || uploading}
                       onClick={() => setCurrentPage((p) => p + 1)}
                     >
@@ -325,7 +325,7 @@ function Addads() {
                   </div>
                 </div>
 
-                <p className="text-center mt-2 text-gray-600">
+                <p className="text-center mt-2 text-base-content opacity-70">
                   صفحة {currentPage} من {totalPages}
                 </p>
               </>
@@ -334,18 +334,21 @@ function Addads() {
         )}
       </div>
 
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
+          <div className="bg-base-200 rounded-lg shadow-lg p-6 w-[90%] max-w-md relative transition-colors duration-300">
             <h1 className="text-2xl font-bold text-[#005FA1] mb-4 text-right">
               إضافة إعلان جديد
             </h1>
 
             <div className="flex flex-col items-center mb-4">
               {!image ? (
-                <label className="flex flex-col items-center justify-center w-32 h-32 bg-gray-100 border-2 border-dashed border-[#005FA1] rounded-lg cursor-pointer hover:bg-gray-200 transition">
+                <label className="flex flex-col items-center justify-center w-32 h-32 bg-base-300 border-2 border-dashed border-[#005FA1] rounded-lg cursor-pointer hover:bg-base-400 transition-colors duration-200">
                   <PhotoIcon className="w-12 h-12 text-[#005FA1] mb-2" />
-                  <span className="text-[#005FA1] text-sm">اختر صورة</span>
+                  <span className="text-[#005FA1] text-sm font-medium">
+                    اختر صورة
+                  </span>
                   <input
                     type="file"
                     className="hidden"
@@ -359,11 +362,11 @@ function Addads() {
                   <img
                     src={image}
                     alt="preview"
-                    className="w-48 h-48 object-cover rounded-lg shadow-md"
+                    className="w-48 h-48 object-cover rounded-lg shadow-md border-2 border-base-300"
                   />
                   <button
                     onClick={handleRemoveImage}
-                    className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition"
+                    className="absolute -top-3 -right-3 bg-red-600 text-white rounded-full p-1 shadow hover:bg-red-700 transition-colors duration-200"
                     disabled={uploading}
                   >
                     <XMarkIcon className="w-5 h-5" />
@@ -374,7 +377,7 @@ function Addads() {
 
             <div className="flex justify-end gap-3 mt-6">
               <button
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition disabled:opacity-50"
+                className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50"
                 onClick={() => setShowModal(false)}
                 disabled={uploading}
               >
@@ -383,9 +386,16 @@ function Addads() {
               <button
                 onClick={handleAddAd}
                 disabled={!imageBase64 || uploading}
-                className="px-4 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#004577] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#005FA1] text-white rounded-lg hover:bg-[#004577] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {uploading ? "جارٍ الرفع..." : "إضافة الإعلان"}
+                {uploading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-base-100 border-t-transparent rounded-full animate-spin"></div>
+                    جارٍ الرفع...
+                  </div>
+                ) : (
+                  "إضافة الإعلان"
+                )}
               </button>
             </div>
           </div>

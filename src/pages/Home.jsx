@@ -1,41 +1,58 @@
-import React from "react";
-import Menu from "../layout/Menu";
+import React, { useState, useEffect } from "react";
 import logoimg from "../assets/images/logo (15).png";
-import AddAcount from "../component/AddAcount";
-import DeleteAcount from "../component/DeleteAcount";
-import AddCoins from "../component/AddCoins";
-import AddUnion from "../component/AddUnion";
-import DeleteUnion from "../component/DeleteUnion";
-import AddOffer from "../component/AddOffer";
-import DeleteOffer from "../component/DeleteOffer";
 import Navbar from "../layout/Navbar";
 import { Outlet } from "react-router-dom";
 
 function Home() {
+  // Dark Mode State - نفس اللي في Dashboard و Addads
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  // Apply dark mode on component mount
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  // Toggle Dark Mode - نفس اللي في Dashboard
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem("darkMode", JSON.stringify(newMode));
+    
+    if (newMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
-    <div className=" overflow-hidden bg-white">
-      {/* Navbar */}
-      <Navbar />
+    <div className="overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-200">
+      {/* Navbar مع تمرير toggleDarkMode */}
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
       {/* Main content with menu + center content */}
-      <div className="  bg-white">
+      <div className="bg-white dark:bg-gray-900 transition-colors duration-200">
         {/* Center content */}
-        <div className="relative flex items-center  justify-center bg-gray-50">
+        <div className="relative flex items-center justify-center bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
           {/* Background logo */}
           <img
             src={logoimg}
             alt="logo"
-            className="absolute w-[403px] h-[415px] opacity-3 pointer-events-none select-none"
+            className={`absolute w-[403px] h-[415px] pointer-events-none select-none transition-opacity duration-200 ${
+              darkMode ? "opacity-5" : "opacity-3"
+            }`}
           />
-              <div className="w-[100%]">
-             <Outlet  />
-             </div>
+          <div className="w-[100%]">
+            <Outlet />
+          </div>
         </div>
-
-        {/* Menu على اليمين
-        <div className="flex-1 w-[200px]  border-l border-gray-300  bg-gray-50">
-          <Menu />
-        </div> */}
       </div>
     </div>
   );

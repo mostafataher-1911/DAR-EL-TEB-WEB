@@ -29,18 +29,6 @@ function Login() {
   const isDisabled = !(phoneOrEmail && password);
 
   const handleLogin = async () => {
-    // ✅ التحقق من صحة البريد أو الهاتف
-    // if (role === "doctor" && !phoneOrEmail.includes("@")) {
-    //   setEmailError("يرجى إدخال بريد إلكتروني صالح يحتوي على @");
-    //   toast.error("يرجى إدخال بريد إلكتروني صالح يحتوي على @");
-    //   return;
-    // }
-    // if (role === "assistant" && phoneOrEmail.length < 8) {
-    //   setEmailError("يرجى إدخال رقم هاتف صالح مكون من 8 أرقام على الأقل");
-    //   toast.error("يرجى إدخال رقم هاتف صالح مكون من 8 أرقام على الأقل");
-    //   return;
-    // }
-
     setEmailError("");
     if (isDisabled) return;
 
@@ -69,15 +57,13 @@ function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-           throw new Error( "بيانات الدخول غير صحيحة.");
-
+        throw new Error("بيانات الدخول غير صحيحة.");
       }
 
       // ✅ تسجيل الدخول ناجح
       localStorage.setItem("role", role);
       localStorage.setItem("user", JSON.stringify(data.resource));
 
-      // toast.success("تم تسجيل الدخول بنجاح!");
       setTimeout(() => navigate("/app"), 1500);
     } catch (err) {
       toast.error(err.message || " خطأ في تسجيل الدخول");
@@ -87,40 +73,79 @@ function Login() {
   };
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen bg-gradient-to-br from-[#E6F0FA] to-white overflow-hidden">
+    <div className="relative flex justify-center items-center min-h-screen 
+                    bg-gradient-to-br from-base-200 to-base-100 
+                    transition-colors duration-300 overflow-hidden">
+      
       {/* 🔔 Toaster */}
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster 
+        position="top-center" 
+        reverseOrder={false}
+        toastOptions={{
+          className: 'dark:bg-gray-800 dark:text-white',
+        }}
+      />
 
       {/* دوائر شفافة */}
-      <div className="absolute w-[400px] h-[400px] bg-[#005FA1]/10 rounded-full top-[-100px] left-[-100px] blur-2xl animate-pulse"></div>
-      <div className="absolute w-[300px] h-[300px] bg-[#005FA1]/10 rounded-full bottom-[-80px] right-[-80px] blur-2xl animate-pulse"></div>
+      <div className="absolute w-[400px] h-[400px] bg-[#005FA1]/10 dark:bg-[#005FA1]/5 
+                      rounded-full top-[-100px] left-[-100px] blur-2xl animate-pulse 
+                      transition-colors duration-300"></div>
+      
+      <div className="absolute w-[300px] h-[300px] bg-[#005FA1]/10 dark:bg-[#005FA1]/5 
+                      rounded-full bottom-[-80px] right-[-80px] blur-2xl animate-pulse 
+                      transition-colors duration-300"></div>
 
       {/* كارد تسجيل الدخول */}
-      <div className="relative flex flex-col justify-center items-center border-1 border-[#005FA1] rounded-lg m-10 p-10 w-full max-w-md overflow-hidden bg-white/80 backdrop-blur-sm">
+      <div className="relative flex flex-col justify-center items-center 
+                      border border-[#005FA1] dark:border-[#005FA1]/30 rounded-lg m-10 p-10 
+                      w-full max-w-md overflow-hidden bg-base-100/80 
+                      backdrop-blur-sm transition-colors duration-300">
+        
         {/* الديكور */}
-        <img src={reactangle1} alt="top-left" className="absolute top-0 left-0 w-[250px] h-[110px] opacity-70" />
-        <img src={reactangle2} alt="bottom-right" className="absolute bottom-0 right-0 w-[250px] h-[100px] opacity-70 " />
+        <img 
+          src={reactangle1} 
+          alt="top-left" 
+          className="absolute top-0 left-0 w-[250px] h-[110px] opacity-70 dark:opacity-30 
+                     transition-opacity duration-300" 
+        />
+        <img 
+          src={reactangle2} 
+          alt="bottom-right" 
+          className="absolute bottom-0 right-0 w-[250px] h-[100px] opacity-70 dark:opacity-30 
+                     transition-opacity duration-300" 
+        />
 
         {/* اللوجو */}
-        <div className="absolute top-4 right-4">
-          <img src={logoimg} alt="logoimg" className="w-[100px] h-[100px] object-contain" />
+        <div className="absolute top-4 right-4 bg-white rounded-full p-1">
+          <img 
+            src={logoimg} 
+            alt="logoimg" 
+            className="w-[100px] h-[100px] object-contain" 
+          />
         </div>
 
         {/* العنوان */}
-        <h3 className="font-roboto font-bold text-[20px] text-center text-[#001D3C] mb-3 mt-20">
+        <h3 className="font-roboto font-bold text-[20px] text-center 
+                       text-[#001D3C] dark:text-base-content mb-3 mt-20 
+                       transition-colors duration-300">
           {role === "doctor"
             ? "تسجيل دخول الطبيب"
             : role === "assistant"
             ? "تسجيل دخول مساعد الطبيب"
             : "اهلا بك في معمل دار الطب"}
         </h3>
-        <p className="font-roboto text-[16px] text-center text-gray-500 mb-3">
+        
+        <p className="font-roboto text-[16px] text-center text-gray-500 dark:text-base-content/80 
+                      mb-3 transition-colors duration-300">
           من فضلك قم بتسجيل الدخول
         </p>
-        <hr className="border-t border-gray-300 mb-10 w-[80%] mx-auto" />
+        
+        <hr className="border-t border-base-300 mb-10 w-[80%] mx-auto 
+                       transition-colors duration-300" />
 
         {/* الحقول */}
         <div className="flex flex-col gap-2 justify-center items-center mb-4 w-full">
+          
           {/* Email أو رقم الهاتف */}
           <CustomInputicon
             icon={
@@ -171,6 +196,7 @@ function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                className="focus:outline-none"
               >
                 {showPassword ? (
                   <EyeSlashIcon className="w-[24px] h-[24px] text-[#005FA1]" />
@@ -186,39 +212,31 @@ function Login() {
           />
         </div>
 
-        {/* تذكرني + نسيت كلمة السر */}
-        {/* <div className="flex items-center justify-between w-full px-2 mb-6 text-sm">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={remember}
-              onChange={() => setRemember(!remember)}
-              className="checkbox checkbox-sm checkbox-info"
-            />
-            <span className="text-gray-600">تذكرني</span>
-          </label>
-          <Link
-            to={"/confirmpassword"}
-            className="text-[#005FA1] hover:underline"
-          >
-            نسيت كلمة السر؟
-          </Link>
-        </div> */}
-
         {/* زر تسجيل الدخول */}
         <button
           disabled={isDisabled || loading}
           onClick={handleLogin}
-          className={`mb-10 w-[180px] sm:w-[180px] md:w-[250px] lg:w-[320px] z-50
-            h-[50px] rounded-[10px] font-bold text-lg text-white transition-all
+          className={`mb-4 w-[180px] sm:w-[180px] md:w-[250px] lg:w-[320px] z-50
+            h-[50px] rounded-[10px] font-bold text-lg text-white transition-all duration-300
             ${
               isDisabled || loading
                 ? "bg-[#09BCDB80] cursor-not-allowed"
-                : "bg-[#09BCDB] hover:bg-[#08A5C5] cursor-pointer"
+                : "bg-[#005FA1] hover:bg-[#005FA1]/90 cursor-pointer"
             }`}
         >
           {loading ? "جاري تسجيل الدخول..." : "متابعة"}
         </button>
+
+
+      
+<Link 
+  to="/" 
+  className="text-[#005FA1] hover:text-[#004080] text-lg font-bold transition-colors duration-300 mt-4
+             relative z-50 cursor-pointer inline-block px-2 py-1"
+>
+  العودة لاختيار الدور
+</Link>
+
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export default function CustomButtonicon({ icon, text  }) {
         hover:bg-[#005FA1]/10
         hover:border-[#004080]
         active:scale-95
+        bg-white
       "
     >
       {/* الأيقونة على الشمال */}
