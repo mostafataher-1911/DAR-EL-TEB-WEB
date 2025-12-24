@@ -12,7 +12,7 @@ export default function CustomInputicon({
   return (
     <div
       className={`
-        w-full                 /* ياخد المساحة كلها في الفون */
+        w-full                 
         h-[56px]
         flex items-center
         border-2 border-[#005FA1]
@@ -39,7 +39,7 @@ export default function CustomInputicon({
         placeholder={placeholder}
         className="
           flex-1 mr-4 font-roboto 
-          text-base text-[15px] sm:text-[15px] md:text-[17px] lg:text-[17px]
+          text-[#005FA1] text-[15px] sm:text-[15px] md:text-[17px] lg:text-[17px]
           outline-none bg-transparent 
           text-right
           placeholder:text-[#005FA1]/50 placeholder:opacity-100
