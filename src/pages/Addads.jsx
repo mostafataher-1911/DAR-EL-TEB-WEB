@@ -79,7 +79,6 @@ function Addads() {
       const data = await res.json();
       console.log("Ads API Response:", data);
 
-      // معالجة مختلف أشكال الرد
       if (Array.isArray(data)) {
         setAds(data);
       } else if (data && data.success && Array.isArray(data.resource)) {
@@ -193,7 +192,6 @@ function Addads() {
     }
   };
 
-  // دالة لعرض الصور مع fallback
   const ImageWithFallback = ({ src, alt, className }) => {
     const [imgSrc, setImgSrc] = useState(src);
     const [hasError, setHasError] = useState(false);

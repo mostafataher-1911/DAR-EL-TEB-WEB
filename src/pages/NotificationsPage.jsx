@@ -65,7 +65,6 @@ function NotificationsPage() {
               />
             </div>
 
-            {/* محتوى الإشعار */}
             <div>
               <label className="block text-right text-base-content mb-2">محتوى الإشعار</label>
               <textarea
@@ -77,7 +76,6 @@ function NotificationsPage() {
               />
             </div>
 
-            {/* زر الإرسال */}
             <button
               onClick={sendNotification}
               disabled={loading || !form.title.trim() || !form.body.trim()}

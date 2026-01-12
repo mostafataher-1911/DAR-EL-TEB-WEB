@@ -515,11 +515,9 @@ function Dashboardunion() {
         )}
       </div>
 
-      {/* Modal محسن مع Scroll */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 transition-colors duration-300">
           <div className="bg-base-200 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col transition-colors duration-300">
-            {/* Modal Header - ثابت */}
             <div className="flex justify-between items-center p-6 border-b border-base-300 sticky top-0 bg-base-200 z-10">
               <h2 className="text-2xl font-bold text-[#005FA1]">
                 {editUnion ? "تعديل النقابة" : "إضافة نقابة جديدة"}
@@ -533,9 +531,7 @@ function Dashboardunion() {
               </button>
             </div>
 
-            {/* Modal Body - مع Scroll */}
             <div className="flex-1 overflow-y-auto p-6">
-              {/* اسم النقابة */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   اسم النقابة *
@@ -555,7 +551,6 @@ function Dashboardunion() {
                 </div>
               </div>
 
-              {/* نسبة الخصم */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   نسبة الخصم (%) *
@@ -578,14 +573,12 @@ function Dashboardunion() {
                 </div>
               </div>
 
-              {/* رفع الصورة */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-base-content mb-2 text-right">
                   {editUnion ? "تغيير صورة النقابة (اختياري)" : "صورة النقابة *"}
                   <span className="text-xs text-base-content opacity-70 mr-2">(يمكنك رفع أي حجم)</span>
                 </label>
                 
-                {/* معاينة الصورة */}
                 {form.image && (
                   <div className="mb-4 relative">
                     <div className="relative w-32 h-32 mx-auto">
@@ -618,7 +611,6 @@ function Dashboardunion() {
                   </div>
                 )}
 
-                {/* زر رفع الصورة */}
                 <div className="flex justify-center">
                   <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer ${processing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-300'} ${form.image ? 'border-base-300' : 'border-[#005FA1]'} transition-colors duration-200`}>
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -640,7 +632,6 @@ function Dashboardunion() {
                   </label>
                 </div>
                 
-                {/* نص تحذيري */}
                 {form.imageBase64 && (
                   <div className="mt-3 p-2 bg-[#005FA1]/10 rounded-lg">
                     <p className="text-xs text-[#005FA1] text-center">
@@ -651,7 +642,6 @@ function Dashboardunion() {
               </div>
             </div>
 
-            {/* Modal Footer - ثابت في الأسفل */}
             <div className="p-6 border-t border-base-300 sticky bottom-0 bg-base-200">
               <div className="flex justify-end gap-3">
                 <button

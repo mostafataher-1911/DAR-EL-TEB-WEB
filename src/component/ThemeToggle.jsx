@@ -1,4 +1,3 @@
-// src/components/ThemeToggle.jsx (بديل)
 import React from 'react';
 import { useTheme } from '../Context/ThemeContext';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';

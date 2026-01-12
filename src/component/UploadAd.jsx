@@ -20,12 +20,10 @@ function UploadAd() {
     <div>
       <div className="flex justify-center items-center h-screen bg-gray-50">
         <div className="flex flex-col gap-6 w-[400px]">
-          {/* العنوان */}
           <h1 className="text-2xl font-bold text-[#005FA1] text-right">
             : إضافة إعلان
           </h1>
 
-          {/* رفع صورة */}
           {!image ? (
             <label className="flex items-center justify-center w-16 h-16 bg-[#005FA1] text-white rounded-full shadow cursor-pointer hover:bg-[#004577] transition mx-auto">
               <PhotoIcon className="w-8 h-8" />
@@ -47,7 +45,6 @@ function UploadAd() {
             </div>
           )}
 
-          {/* اختيار التاريخ (بداية ونهاية) جنب بعض */}
           <div className="flex flex-row gap-4">
             <div className="flex flex-col text-center w-1/2">
               <label className="mb-1 text-medium font-medium text-[#005FA1]">
@@ -70,7 +67,6 @@ function UploadAd() {
             </div>
           </div>
 
-          {/* الزرار */}
           <CustomButton
             text="إضافة إعلان"
             onClick={() => {

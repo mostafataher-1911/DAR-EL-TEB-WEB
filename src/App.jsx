@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, useEffect } from "react"; // أضف useEffect هنا
+import { Suspense, useEffect } from "react"; 
 import { Toaster } from 'react-hot-toast';
 import Login from "./pages/Login";
 import Loading from "./component/Loading";

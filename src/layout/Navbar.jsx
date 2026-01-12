@@ -23,7 +23,7 @@ function Navbar() {
     navigate("/");
   };
 
-  const role = localStorage.getItem("role"); // ✅ جلب الدور
+  const role = localStorage.getItem("role"); 
 
   const navLinks = role === "assistant"
     ? [

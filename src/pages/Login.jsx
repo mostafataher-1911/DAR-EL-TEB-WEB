@@ -60,7 +60,6 @@ function Login() {
         throw new Error("بيانات الدخول غير صحيحة.");
       }
 
-      // ✅ تسجيل الدخول ناجح
       localStorage.setItem("role", role);
       localStorage.setItem("user", JSON.stringify(data.resource));
 
@@ -77,7 +76,6 @@ function Login() {
                     bg-gradient-to-br from-base-200 to-base-100 
                     transition-colors duration-300 overflow-hidden">
       
-      {/* 🔔 Toaster */}
       <Toaster 
         position="top-center" 
         reverseOrder={false}
@@ -86,7 +84,6 @@ function Login() {
         }}
       />
 
-      {/* دوائر شفافة */}
       <div className="absolute w-[400px] h-[400px] bg-[#005FA1]/10 dark:bg-[#005FA1]/5 
                       rounded-full top-[-100px] left-[-100px] blur-2xl animate-pulse 
                       transition-colors duration-300"></div>
@@ -95,13 +92,11 @@ function Login() {
                       rounded-full bottom-[-80px] right-[-80px] blur-2xl animate-pulse 
                       transition-colors duration-300"></div>
 
-      {/* كارد تسجيل الدخول */}
       <div className="relative flex flex-col justify-center items-center 
                       border border-[#005FA1] dark:border-[#005FA1]/30 rounded-lg m-10 p-10 
                       w-full max-w-md overflow-hidden bg-base-100/80 
                       backdrop-blur-sm transition-colors duration-300">
         
-        {/* الديكور */}
         <img 
           src={reactangle1} 
           alt="top-left" 
@@ -115,7 +110,6 @@ function Login() {
                      transition-opacity duration-300" 
         />
 
-        {/* اللوجو */}
         <div className="absolute top-4 right-4 bg-white rounded-full p-1">
           <img 
             src={logoimg} 
@@ -124,7 +118,6 @@ function Login() {
           />
         </div>
 
-        {/* العنوان */}
         <h3 className="font-roboto font-bold text-[20px] text-center 
                        text-[#005FA1] dark:text-base-content mb-3 mt-20 
                        transition-colors duration-300">
@@ -143,10 +136,8 @@ function Login() {
         <hr className="border-t border-base-300 mb-10 w-[80%] mx-auto 
                        transition-colors duration-300" />
 
-        {/* الحقول */}
         <div className="flex flex-col gap-2 justify-center items-center mb-4 w-full">
           
-          {/* Email أو رقم الهاتف */}
           <CustomInputicon
             icon={
               role === "doctor" ? (
@@ -190,7 +181,6 @@ function Login() {
             }}
           />
 
-          {/* كلمة السر */}
           <CustomInputicon
             icon={
               <button
@@ -212,7 +202,6 @@ function Login() {
           />
         </div>
 
-        {/* زر تسجيل الدخول */}
         <button
           disabled={isDisabled || loading}
           onClick={handleLogin}

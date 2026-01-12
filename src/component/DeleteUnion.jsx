@@ -6,12 +6,10 @@ function DeleteUnion() {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
           <div className="flex flex-col gap-6 w-[350px]">
-            {/* العنوان */}
             <h1 className="text-2xl font-bold text-[#005FA1] text-right">
               : حذف نقابه
             </h1>
     
-            {/* اسم النقابه */}
             <CustomSelect
               icon={
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -24,7 +22,6 @@ function DeleteUnion() {
             />
     
     
-            {/* الزرار */}
             <CustomButton
             color={"#FF0000"} 
               text="حذف نقابه"

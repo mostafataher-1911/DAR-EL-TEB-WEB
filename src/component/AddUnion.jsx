@@ -9,12 +9,10 @@ function AddUnion(){
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col gap-6 w-[350px]">
-        {/* العنوان */}
         <h1 className="text-2xl font-bold text-[#005FA1] text-right">
           : إضافة نقابه
         </h1>
 
-        {/* اسم النقابه */}
         <CustomInputicon
           icon={
            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -28,7 +26,6 @@ function AddUnion(){
         />
 
        
-        {/*  نسبه الخصم للنقابه */}
         <div className="flex flex-col gap-2 w-[127px] text-center max-w-sm mx-auto ">
           <label className="text-[#005FA1] font-medium"> نسبه الخصم
 للنقابه </label>
@@ -47,7 +44,6 @@ function AddUnion(){
         </div>
 
 
-        {/* الزرار */}
         <CustomButton
           text="إضافة نقابه"
           onClick={() => {

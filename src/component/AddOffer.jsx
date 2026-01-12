@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import CustomInputicon from "./CustomInputicon";
 import CustomButton from "./CustomButton";
-import CustomSelect from "./CustomSelect"; // ✅ لازم تعمل import
+import CustomSelect from "./CustomSelect"; 
 
 function AddOffer() {
   const [offerType, setOfferType] = useState("");
   const [offerName, setOfferName] = useState("");
   const [price, setPrice] = useState("");
- const [discount, setDiscount] = useState("");     // نسبة الخصم
-const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخصم
+ const [discount, setDiscount] = useState("");     
+const [finalPrice, setFinalPrice] = useState(""); 
 
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col gap-6 w-[350px]">
-        {/* العنوان */}
         <h1 className="text-2xl font-bold text-[#005FA1] text-right">
           : إضافة عرض
         </h1>
 
-        {/* نوع التحليل */}
         <CustomSelect
           icon={
            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -29,10 +27,9 @@ const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخص�
           }
           defaultValue=" إختر نوع التحليل "
           options={["نوع 1", "نوع 2", "نوع 3"]}
-          onChange={(e) => setOfferType(e.target.value)} // ✅ ربط القيمة
+          onChange={(e) => setOfferType(e.target.value)} 
         />
 
-        {/* اسم التحليل */}
         <CustomSelect
           icon={
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -42,10 +39,9 @@ const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخص�
           }
           defaultValue=" إختر اسم التحليل "
           options={["اسم 1", "اسم 2", "اسم 3"]}
-          onChange={(e) => setOfferName(e.target.value)} // ✅ ربط القيمة
+          onChange={(e) => setOfferName(e.target.value)} 
         />
 
-        {/* سعر التحليل */}
         <CustomInputicon
         
           type="number"
@@ -67,10 +63,9 @@ const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخص�
             </svg>
           }
           value={price}
-          onChange={(e) => setPrice(e.target.value)} // ✅ ربط القيمة
+          onChange={(e) => setPrice(e.target.value)} 
         />
         <div className="flex justify-between items-center">
-               {/* سعر بعد الخصم */}
         <div className="flex flex-col gap-2 w-[120px] max-w-sm mx-auto text-center">
           <label className="text-[#005FA1] font-medium">سعر بعد الخصم</label>
           <div className="relative">
@@ -93,7 +88,6 @@ const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخص�
 </svg>
 
         </div>
-            {/* نسبة الخصم */}
 
         <div className="flex flex-col gap-2 w-[100px] max-w-sm mx-auto text-center">
           <label className="text-[#005FA1] font-medium"> نسبه الخصم</label>
@@ -112,7 +106,6 @@ const [finalPrice, setFinalPrice] = useState(""); // السعر بعد الخص�
         </div>
      
         </div>
-        {/* الزرار */}
         <CustomButton
           text="إضافة عرض"
           onClick={() => {

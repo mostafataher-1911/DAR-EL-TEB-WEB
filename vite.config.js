@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist', // مهم علشان Vercel يلاقي الملفات
+    outDir: 'dist', 
   },
-  base: '/', // علشان المسارات تشتغل كويس بعد الرفع
+  base: '/', 
 })

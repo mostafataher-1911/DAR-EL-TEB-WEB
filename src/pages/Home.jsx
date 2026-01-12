@@ -4,7 +4,6 @@ import Navbar from "../layout/Navbar";
 import { Outlet } from "react-router-dom";
 
 function Home() {
-  // Dark Mode State - نفس اللي في Dashboard و Addads
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved ? JSON.parse(saved) : false;
@@ -19,7 +18,6 @@ function Home() {
     }
   }, [darkMode]);
 
-  // Toggle Dark Mode - نفس اللي في Dashboard
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
@@ -34,7 +32,6 @@ function Home() {
 
   return (
     <div className="overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-200">
-      {/* Navbar مع تمرير toggleDarkMode */}
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
       {/* Main content with menu + center content */}

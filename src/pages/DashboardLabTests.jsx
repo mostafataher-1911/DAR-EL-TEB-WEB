@@ -403,9 +403,7 @@ function DashboardLabTests() {
           <Loading />
         ) : (
           <>
-            {/* شريط التحكم - تصميم متجاوب */}
             <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
-              {/* الأزرار */}
               <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
                 <button
                   className="flex justify-center items-center gap-2 w-full sm:w-auto p-2 bg-[#005FA1] text-white rounded-lg shadow-md hover:bg-[#00457a] text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
@@ -472,7 +470,6 @@ function DashboardLabTests() {
               </div>
             </div>
 
-            {/* الجدول */}
             <div className="overflow-x-auto bg-base-200 rounded-lg shadow-md transition-colors duration-300">
               <table className="table table-zebra w-full text-center">
                 <thead className="bg-[#005FA1] text-white">
@@ -547,7 +544,6 @@ function DashboardLabTests() {
               </table>
             </div>
 
-            {/* Pagination */}
             {filteredTests.length > 0 && (
               <>
                 <div className="flex justify-center mt-6">
@@ -578,7 +574,6 @@ function DashboardLabTests() {
         )}
       </div>
 
-      {/* مودال التحليل */}
       {showTestModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
           <div className="bg-base-200 rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transition-colors duration-300">
@@ -587,7 +582,6 @@ function DashboardLabTests() {
             </h1>
 
             <div className="space-y-4">
-              {/* اسم التحليل */}
               <div className="relative">
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                   <BeakerIcon className="w-5 h-5 text-[#005FA1]" />
@@ -602,7 +596,6 @@ function DashboardLabTests() {
                 />
               </div>
 
-              {/* السعر */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -619,7 +612,6 @@ function DashboardLabTests() {
                 </div>
               </div>
 
-              {/* كوينز */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -636,7 +628,6 @@ function DashboardLabTests() {
                 </div>
               </div>
 
-              {/* كوينز النقابات */}
               <div className="mb-4">
                 <div className="relative">
                   <input
@@ -653,7 +644,6 @@ function DashboardLabTests() {
                 </div>
               </div>
 
-              {/* اختيار النوع */}
               <div className="relative">
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                   <BeakerIcon className="w-5 h-5 text-[#005FA1]" />
@@ -685,7 +675,6 @@ function DashboardLabTests() {
                 </div>
               </div>
 
-              {/* رفع صورة */}
               <div className="mb-4">
                 <p className="text-[#005FA1] text-right">اختار صوره التحليل</p>
                 <input
@@ -716,7 +705,6 @@ function DashboardLabTests() {
               </div>
             </div>
 
-            {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
                 className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -816,7 +804,6 @@ function DashboardLabTests() {
                 </div>
               </div>
               
-              {/* رسائل التوجيه والتحذير */}
               {newTypeOrder && !isOrderRankUnique(newTypeOrder, editType?.id) && (
                 <div className="p-3 bg-red-100 border border-red-300 rounded-lg transition-colors duration-200">
                   <p className="text-red-600 text-sm text-right">
@@ -839,7 +826,6 @@ function DashboardLabTests() {
                 </div>
               )}
               
-              {/* عرض أرقام الترتيب المتاحة */}
               {!editType && (
                 <div className="p-3 bg-blue-100 border border-blue-300 rounded-lg transition-colors duration-200">
                   <p className="text-blue-600 text-sm text-right">
@@ -849,7 +835,6 @@ function DashboardLabTests() {
               )}
             </div>
 
-            {/* قائمة الأنواع */}
             <div className="border border-base-300 rounded-lg overflow-hidden transition-colors duration-200">
               <table className="w-full text-right">
                 <thead className="bg-base-300">
@@ -908,7 +893,6 @@ function DashboardLabTests() {
               </table>
             </div>
 
-            {/* ملاحظات */}
             <div className="mt-4 p-3 bg-base-300 rounded-lg transition-colors duration-200">
               <p className="text-base-content text-sm text-right">
                 📝 <span className="font-medium">ملاحظات:</span> 
@@ -924,7 +908,6 @@ function DashboardLabTests() {
               </p>
             </div>
 
-            {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
                 className="px-6 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"

@@ -38,7 +38,6 @@ function Dashboard() {
   const CLIENT_API = "https://apilab-dev.runasp.net/api/Client";
   const UNION_API = "https://apilab-dev.runasp.net/api/Union";
 
-  // تحميل النقابات
   const fetchUnions = async () => {
     try {
       const res = await fetch(`${UNION_API}/GetAll`);
@@ -51,7 +50,6 @@ function Dashboard() {
     }
   };
 
-  // تحميل العملاء
   const fetchClients = async (unionName = "") => {
     setLoading(true);
     try {
@@ -67,7 +65,6 @@ function Dashboard() {
           union: c.address || "غير محدد",
         }));
 
-        // تطبيق الفلتر محلياً بناءً على اسم النقابة
         if (unionName) {
           clients = clients.filter((client) => client.union === unionName);
         }
@@ -83,7 +80,6 @@ function Dashboard() {
     setLoading(false);
   };
 
-  // تحميل التحاليل (لل coins)
   useEffect(() => {
     fetch("https://apilab-dev.runasp.net/api/MedicalLabs/GetAll")
       .then((res) => res.json())
@@ -300,7 +296,6 @@ function Dashboard() {
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="p-4 sm:p-6 min-h-screen bg-base-100 transition-colors duration-300">
-        {/* البحث والفلتر والأزرار */}
         <div className="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
           <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
             <button
@@ -356,7 +351,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* الجدول */}
         {loading ? (
           <Loading />
         ) : (
@@ -443,7 +437,6 @@ function Dashboard() {
         )}
       </div>
 
-      {/* مودال إضافة مستخدم */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
           <div className="bg-base-200 rounded-lg shadow-lg p-6 w-full max-w-md transition-colors duration-300">
@@ -452,7 +445,6 @@ function Dashboard() {
             </h1>
 
             <div className="space-y-4">
-              {/* اسم المستخدم */}
               <div className="w-full">
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -468,7 +460,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* النوع */}
               <div className="w-full">
                 <label className="block text-right text-base-content mb-2">النوع</label>
                 <div className="flex gap-2">
@@ -500,7 +491,6 @@ function Dashboard() {
                 </p>
               </div>
 
-              {/* رقم المحمول */}
               <div className="w-full">
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -521,7 +511,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* عدد الكوينز */}
               <div className="w-full">
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -537,7 +526,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* اختيار النقابة */}
               <div className="w-full">
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -595,7 +583,6 @@ function Dashboard() {
         </div>
       )}
 
-      {/* مودال إضافة كوينز */}
       {showCoinsModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-50 p-4 transition-colors duration-300">
           <div className="bg-base-200 rounded-lg shadow-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transition-colors duration-300">
@@ -603,7 +590,6 @@ function Dashboard() {
               إضافة كوينز
             </h1>
 
-            {/* رقم الهاتف */}
             <div className="mb-4">
               <div className="relative">
                 <input
@@ -622,7 +608,6 @@ function Dashboard() {
               </div>
             </div>
 
-            {/* البحث والتحاليل */}
             <div className="p-4 bg-base-300 rounded-lg transition-colors duration-200">
               <div className="mb-4">
                 <input
@@ -712,7 +697,6 @@ function Dashboard() {
               </div>
             </div>
 
-            {/* الأزرار */}
             <div className="flex justify-end gap-3 mt-6">
               <button
                 className="px-4 py-2 bg-base-300 text-base-content rounded-lg hover:bg-base-400 transition-colors duration-200"

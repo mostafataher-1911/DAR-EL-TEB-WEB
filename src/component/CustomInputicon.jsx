@@ -26,12 +26,11 @@ export default function CustomInputicon({
         ${className}
       `}
     >
-      {/* الأيقونة على الشمال */}
       <span className="flex-shrink-0 w-[24px] h-[24px] text-[#005FA1]">
         {icon}
       </span>
 
-      {/* input */}
+      
       <input
         value={value}
         onChange={onChange}

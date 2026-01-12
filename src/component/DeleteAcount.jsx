@@ -8,12 +8,10 @@ function DeleteAcount() {
     <>
      <div className="flex justify-center items-center h-screen bg-gray-50">
           <div className="flex flex-col gap-6 w-[350px]">
-            {/* العنوان */}
             <h1 className="text-2xl font-bold text-[#005FA1] text-right">
               : حذف حساب 
             </h1>
     
-            {/* اسم المستخدم */}
             <CustomInputicon
               icon={
                 <svg
@@ -35,7 +33,6 @@ function DeleteAcount() {
             />
     
     
-            {/* رقم المحمول */}
             <CustomInputicon
             type='number'
               icon={
@@ -57,7 +54,6 @@ function DeleteAcount() {
               placeholder="رقم المحمول"
             />
     
-            {/* الزرار */}
             <CustomButton text="حذف " onClick={() => {}} color={"#FF0000"} />
           </div>
         </div>

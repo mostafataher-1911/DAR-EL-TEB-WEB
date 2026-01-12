@@ -9,12 +9,10 @@ function AddCoins() {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col gap-6 w-[350px]">
-        {/* العنوان */}
         <h1 className="text-2xl font-bold text-[#005FA1] text-right">
           : إضافة كوينز
         </h1>
 
-        {/* رقم المحمول */}
         <CustomInputicon
         type="number"
           icon={
@@ -38,7 +36,6 @@ function AddCoins() {
           onChange={(e) => setMobile(e.target.value)}
         />
 
-        {/* عدد الكوينز */}
         <div className="flex flex-col gap-2 w-[100px] max-w-sm mx-auto text-right">
           <label className="text-[#005FA1] font-medium">: عدد الكوينز</label>
           <div className="relative">
@@ -55,7 +52,6 @@ function AddCoins() {
           </div>
         </div>
 
-        {/* الزرار */}
         <CustomButton
           text="إضافة كوينز"
           onClick={() => {

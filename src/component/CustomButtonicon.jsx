@@ -22,10 +22,8 @@ export default function CustomButtonicon({ icon, text  }) {
         bg-white
       "
     >
-      {/* الأيقونة على الشمال */}
       <span className="flex-shrink-0 w-[24px] h-[24px]">{icon}</span>
 
-      {/* النص على اليمين */}
       <span className="text-[#005FA1] font-roboto font-bold text-lg">
         {text}
       </span>

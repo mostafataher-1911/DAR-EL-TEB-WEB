@@ -16,15 +16,12 @@ function CustomSelect({ options = [], icon, defaultValue = "Pick a value", value
 
   return (
     <div className="relative w-full">
-      {/* container */}
       <div
         onClick={() => setIsOpen(!isOpen)}
         className="relative flex items-center h-[56px] pl-3 pr-10 border-2 border-[#005FA1] rounded-[10px] cursor-pointer bg-white"
       >
-        {/* icon on left */}
         {icon && <span className="text-[#005FA1]">{icon}</span>}
 
-        {/* text in center */}
         <span
           className={`absolute left-1/2 -translate-x-1/2 ${
             selected ? "text-black" : "text-gray-400"
@@ -33,7 +30,6 @@ function CustomSelect({ options = [], icon, defaultValue = "Pick a value", value
           {selected || defaultValue}
         </span>
 
-        {/* arrow */}
         {isOpen ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +55,6 @@ function CustomSelect({ options = [], icon, defaultValue = "Pick a value", value
         )}
       </div>
 
-      {/* options */}
       {isOpen && (
         <ul className="absolute mt-2  bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 ">
           {options.map((option, index) => (

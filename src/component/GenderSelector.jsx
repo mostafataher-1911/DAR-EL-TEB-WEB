@@ -10,7 +10,6 @@ export default function GenderSelector({ onChange }) {
 
   return (
     <div className="flex gap-4 justify-center ">
-         {/* أنثى */}
       <label className="cursor-pointer">
         <input
           type="radio"
@@ -33,7 +32,6 @@ export default function GenderSelector({ onChange }) {
           أنثى
         </div>
       </label>
-      {/* ذكر */}
       <label className="cursor-pointer">
         <input
           type="radio"

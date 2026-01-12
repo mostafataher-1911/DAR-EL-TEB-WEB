@@ -6,11 +6,11 @@ export default function CustomButton({ text, onClick, color = "#005FA1" }) {
       onClick={onClick}
       style={{ backgroundColor: color }}
       className="
-        w-full                /* يخلي الزرار ياخد عرض الكونتينر */
-        max-w-[350px]         /* أقصى عرض للزرار */
-        h-[48px]              /* ارتفاع مناسب للموبايل */
-        sm:h-[52px]           /* تكبير بسيط للشاشات المتوسطة */
-        md:h-[56px]           /* أكبر شوية للـ Desktop */
+        w-full                
+        max-w-[350px]      
+        h-[48px]            
+        sm:h-[52px]           
+        md:h-[56px]         
         text-white text-base sm:text-lg font-semibold
         rounded-[10px] 
         flex items-center justify-center

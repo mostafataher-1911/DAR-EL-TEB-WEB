@@ -4,7 +4,7 @@ import CustomInputicon from "../component/CustomInputicon";
 import logoimg from "../assets/images/logo (15).png";
 import reactangle1 from "../assets/images/Rectangle 1.png";
 import reactangle2 from "../assets/images/Rectangle 2.png";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; // 👈 استيراد الايقونات
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; 
 
 function Confirmpassword() {
   const [phone, setPhone] = useState("");
@@ -31,28 +31,22 @@ function Confirmpassword() {
 
   return (
     <div className="relative flex justify-center items-center min-h-screen bg-gradient-to-br from-[#E6F0FA] to-white overflow-hidden">
-      {/* دوائر شفافة */}
       <div className="absolute w-[400px] h-[400px] bg-[#005FA1]/10 rounded-full top-[-100px] left-[-100px] blur-2xl animate-pulse"></div>
       <div className="absolute w-[300px] h-[300px] bg-[#005FA1]/10 rounded-full bottom-[-80px] right-[-80px] blur-2xl animate-pulse"></div>
 
-      {/* الكارد */}
       <div className="relative flex flex-col justify-center items-center border-1 border-[#005FA1] rounded-lg m-10 p-10 w-full max-w-md overflow-hidden bg-white/80 backdrop-blur-sm">
-        {/* الديكور */}
         <img src={reactangle1} alt="top-left" className="absolute top-0 left-0 w-[250px] h-[110px] opacity-70" />
         <img src={reactangle2} alt="bottom-right" className="absolute bottom-0 right-0 w-[250px] h-[100px] opacity-70 " />
 
-        {/* اللوجو */}
         <div className="absolute top-4 right-4">
           <img src={logoimg} alt="logoimg" className="w-[100px] h-[100px] object-contain" />
         </div>
 
-        {/* العنوان */}
         <h3 className="font-roboto font-bold text-[20px] text-center text-[#001D3C] mb-3 mt-20">
           اهلا بك في معمل دار الطب
         </h3>
         <hr className="border-t border-gray-300 mb-10 w-[80%] mx-auto" />
 
-        {/* الحقول */}
         <div className="flex flex-col gap-4 justify-center items-center mb-4 w-full">
           <CustomInputicon
             icon={
@@ -66,7 +60,6 @@ function Confirmpassword() {
             onChange={(e) => setPhone(e.target.value)}
           />
 
-          {/* كلمة السر الجديدة */}
         <CustomInputicon
   placeholder="ادخل كلمة السر الجديدة"
   type={showPassword ? "text" : "password"}
@@ -105,11 +98,9 @@ function Confirmpassword() {
   }
 />
 
-          {/* رسالة خطأ */}
           {error && <span className="text-red-500 text-sm">{error}</span>}
         </div>
 
-        {/* زر تسجيل الدخول */}
         <button
           disabled={isDisabled}
           onClick={handleLogin}

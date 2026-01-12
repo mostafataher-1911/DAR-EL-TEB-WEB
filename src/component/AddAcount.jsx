@@ -7,12 +7,10 @@ function AddAcount() {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col gap-6 w-[350px]">
-        {/* العنوان */}
         <h1 className="text-2xl font-bold text-[#005FA1] text-right">
           : إضافة حساب جديد
         </h1>
 
-        {/* اسم المستخدم */}
         <CustomInputicon
           icon={
             <svg
@@ -33,11 +31,9 @@ function AddAcount() {
           placeholder="اسم المستخدم"
         />
 
-        {/* النوع */}
         
         <GenderSelector />
 
-        {/* رقم المحمول */}
         <CustomInputicon
         type="number"
           icon={
@@ -59,7 +55,6 @@ function AddAcount() {
           placeholder="رقم المحمول"
         />
 
-        {/* الزرار */}
         <CustomButton text="إضافة " onClick={() => {}} />
       </div>
     </div>
