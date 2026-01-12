@@ -7,14 +7,12 @@ import './App.css'
 import Welcomepage from "./pages/Welcomepage";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import UploadAd from "./component/UploadAd";
 import Confirmpassword from "./pages/Confirmpassword";
 import Dashboardunion from "./pages/Dashboardunion";
 import DashboardLabTests from "./pages/DashboardLabTests";
 import Addads from "./pages/Addads";
 import { disableDarkMode } from './utils/disableDarkMode'
 import NotificationsPage from "./pages/NotificationsPage";
-import Alllabtest from "./pages/Alllabtest";
 import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {
@@ -42,7 +40,6 @@ function App() {
             <Route path="unions" element={<Dashboardunion/>} />
             <Route path="ads" element={<Addads/>} />
              <Route path="notifications" element={<NotificationsPage/>} />
-              <Route path="Alllabtest" element={<Alllabtest/>} />
           </Route>
           
           <Route path="*" element={<Navigate to="/" replace />} />
